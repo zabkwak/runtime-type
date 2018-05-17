@@ -7,6 +7,7 @@ import ObjectType from './types/object';
 import Enum from './types/enum';
 import Any from './types/any';
 import InstanceOf from './types/instanceof';
+import ArrayOf from './types/arrayof';
 
 export default {
     integer: new Integer(),
@@ -17,10 +18,11 @@ export default {
     object: new ObjectType(),
     any: new Any(),
     instanceOf: (Class) => new InstanceOf(Class),
+    arrayOf: (type) => new ArrayOf(type),
     /**
      * 
      * @param {string} defaultValue 
      * @param {string[]} values 
      */
-    enum: (defaultValue, ...values) => new Enum(defaultValue, ...values)
+    enum: (defaultValue, ...values) => new Enum(defaultValue, ...values),
 }

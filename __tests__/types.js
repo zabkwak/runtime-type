@@ -96,7 +96,7 @@ describe('Enum type', () => {
 
 describe('InstanceOf type', () => {
 
-    class T {}
+    class T { }
 
     it('checks if the values is instance of defined type', () => {
         expect(Type.instanceOf(Array).isValid([])).to.be.true;
@@ -109,3 +109,20 @@ describe('InstanceOf type', () => {
         expect(Type.instanceOf(T).isValid(new T())).to.be.true;
     });
 });
+
+describe('ArrayOf type', () => {
+
+    it('checks if the array contains all valid types', () => {
+        expect(Type.arrayOf(Type.integer).isValid([1, 2, 3, 4, 5])).to.be.true;
+        expect(Type.arrayOf(Type.integer).isValid(['1', '2', '3', '4', '5'])).to.be.true;
+        expect(Type.arrayOf(Type.integer).isValid(['test', 'test'])).to.be.false;
+        expect(Type.arrayOf(Type.integer).isValid([new Date(), Date.now()])).to.be.false;
+
+        expect(Type.arrayOf(Type.integer).cast(['1', '2', '3', '4', '5'])).to.deep.equal([1, 2, 3, 4, 5]);
+        castError(Type.arrayOf(Type.integer), [2, 'test', 'test', '1']);
+    });
+});
+
+// TODO float
+// TODO date
+// TODO string
