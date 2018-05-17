@@ -12,7 +12,7 @@ import Shape from './types/shape';
 
 import Type from './types/base';
 
-const M = {
+export default {
     integer: new Integer(),
     float: new Float(),
     string: new String(),
@@ -31,9 +31,5 @@ const M = {
     enum: (defaultValue, ...values) => new Enum(defaultValue, ...values),
 
     isValidType: (type) => type instanceof Type,
-};
-
-export {
-    M as default,
     Type,
 };

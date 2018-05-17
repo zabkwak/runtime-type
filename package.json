@@ -1,13 +1,13 @@
 {
   "name": "runtime-type",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Module for casting to types at runtime.",
   "main": "index.js",
   "scripts": {
     "test": "mocha __tests__ --recursive --compilers js:babel-core/register",
     "create_index": "run-script-os",
-    "create_index:win32": "echo module.exports = require('./dist'); > index.js",
-    "create_index:linux:darwin": "echo \"module.exports = require('./dist');\" > index.js",
+    "create_index:win32": "echo module.exports = require('./dist').default; > index.js",
+    "create_index:linux:darwin": "echo \"module.exports = require('./dist').default;\" > index.js",
     "build": "./node_modules/.bin/babel ./src --out-dir ./dist --copy-files && npm run create_index",
     "clear": "rm -rf ./dist && rm -f ./index.js",
     "prepublish": "npm run build",
