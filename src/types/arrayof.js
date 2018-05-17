@@ -28,18 +28,11 @@ export default class ArrayOf extends Base {
             try {
                 return this._type.cast(v);
             } catch (e) {
-                if (e.code === 'invalid_cast') {
-                    throw new Error(`The value at index ${index} cannot be cast to ${this._type.toLowerCase()}.`, 'invalid_cast');
+                if (e.code === 'ERR_INVALID_CAST') {
+                    throw new Error(`The value at index ${index} cannot be cast to ${this._type.getName().toLowerCase()}.`, 'invalid_cast');
                 }
                 throw e;
             }
         });
-        values.forEach((value) => {
-
-        });
-        if (!(value instanceof this._class)) {
-            throw new Error(`Value ${value} must be an instance of ${this._class.name}`, 'invalid_cast');
-        }
-        return value;
     }
 }

@@ -8,6 +8,7 @@ import Enum from './types/enum';
 import Any from './types/any';
 import InstanceOf from './types/instanceof';
 import ArrayOf from './types/arrayof';
+import Shape from './types/shape';
 
 export default {
     integer: new Integer(),
@@ -19,6 +20,7 @@ export default {
     any: new Any(),
     instanceOf: (Class) => new InstanceOf(Class),
     arrayOf: (type) => new ArrayOf(type),
+    shape: (shape) => new Shape(shape),
     /**
      * 
      * @param {string} defaultValue 

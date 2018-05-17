@@ -117,9 +117,37 @@ describe('ArrayOf type', () => {
         expect(Type.arrayOf(Type.integer).isValid(['1', '2', '3', '4', '5'])).to.be.true;
         expect(Type.arrayOf(Type.integer).isValid(['test', 'test'])).to.be.false;
         expect(Type.arrayOf(Type.integer).isValid([new Date(), Date.now()])).to.be.false;
+    });
 
+    it('tries to cast the type', () => {
         expect(Type.arrayOf(Type.integer).cast(['1', '2', '3', '4', '5'])).to.deep.equal([1, 2, 3, 4, 5]);
         castError(Type.arrayOf(Type.integer), [2, 'test', 'test', '1']);
+    });
+});
+
+describe('Shape type', () => {
+
+    const shape = { integer: Type.integer, string: Type.string };
+
+    it('creates the shape', () => {
+        expect(Type.shape(shape)).to.be.an.instanceOf(BaseType);
+    });
+
+    it('tries to create the shape from invalid type', () => {
+        expect(() => Type.shape({ something: 'something' })).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+    })
+
+    it('checks if the shape contains all valid types', () => {
+        expect(Type.shape(shape).isValid({ integer: 5, string: 'string' })).to.be.true;
+        expect(Type.shape(shape).isValid({ integer: '5', string: 'string' })).to.be.true;
+        expect(Type.shape(shape).isValid({ integer: 'string', string: 'string' })).to.be.false;
+    });
+
+    it('tries to cast the type', () => {
+        expect(Type.shape(shape).cast({ integer: 5, string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
+        expect(Type.shape(shape).cast({ integer: '5', string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
+        castError(Type.shape(shape), { integer: 'string', string: 'string' });
+
     });
 });
 
