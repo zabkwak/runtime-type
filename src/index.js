@@ -10,7 +10,9 @@ import InstanceOf from './types/instanceof';
 import ArrayOf from './types/arrayof';
 import Shape from './types/shape';
 
-export default {
+import Type from './types/base';
+
+const M = {
     integer: new Integer(),
     float: new Float(),
     string: new String(),
@@ -27,4 +29,11 @@ export default {
      * @param {string[]} values 
      */
     enum: (defaultValue, ...values) => new Enum(defaultValue, ...values),
-}
+
+    isValidType: (type) => type instanceof Type,
+};
+
+export {
+    M as default,
+    Type,
+};
