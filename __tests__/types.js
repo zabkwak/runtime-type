@@ -3,8 +3,8 @@ import Error from 'smart-error';
 import Type from '../src';
 import BaseType from '../src/types/base';
 
-const castError = (type, value) => {
-    expect(type.cast.bind(type, value)).to.throw(Error).that.has.property('code', 'ERR_INVALID_CAST');
+const castError = (type, value, code = 'ERR_INVALID_CAST') => {
+    expect(type.cast.bind(type, value)).to.throw(Error).that.has.property('code', code);
 }
 
 describe('Any type', () => {
@@ -112,6 +112,14 @@ describe('InstanceOf type', () => {
 
 describe('ArrayOf type', () => {
 
+    it('creates the type', () => {
+        expect(Type.arrayOf(Type.integer)).to.be.instanceOf(BaseType);
+    });
+
+    it('tries to create the type from invalid type', () => {
+        expect(() => Type.arrayOf('something')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+    });
+
     it('checks if the array contains all valid types', () => {
         expect(Type.arrayOf(Type.integer).isValid([1, 2, 3, 4, 5])).to.be.true;
         expect(Type.arrayOf(Type.integer).isValid(['1', '2', '3', '4', '5'])).to.be.true;
@@ -147,7 +155,34 @@ describe('Shape type', () => {
         expect(Type.shape(shape).cast({ integer: 5, string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
         expect(Type.shape(shape).cast({ integer: '5', string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
         castError(Type.shape(shape), { integer: 'string', string: 'string' });
+    });
 
+    it('tries to cast the type with missing key', () => {
+        castError(Type.shape(shape), { integer: 5 }, 'ERR_UNSUPPORTED_OPERATION');
+    });
+
+    it('checks the multi-shape shape', () => {
+        const s = Type.shape({
+            ...shape,
+            shape: Type.shape(shape),
+        });
+        expect(s).to.be.an.instanceOf(BaseType);
+        expect(s.isValid({
+            integer: 5,
+            string: 'string',
+            shape: {
+                integer: 5,
+                string: 'string',
+            },
+        })).to.be.true;
+        expect(s.isValid({
+            integer: 5,
+            string: 'string',
+            shape: {
+                integer: 'string',
+                string: 'string',
+            },
+        })).to.be.false;
     });
 });
 
