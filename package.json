@@ -1,7 +1,7 @@
 {
   "name": "runtime-type",
   "version": "0.1.2",
-  "description": "",
+  "description": "Module for casting to types at runtime.",
   "main": "index.js",
   "scripts": {
     "test": "mocha __tests__ --recursive --compilers js:babel-core/register",
@@ -13,7 +13,7 @@
     "prepublish": "npm run build",
     "postpublish": "npm run clear"
   },
-  "author": "",
+  "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "smart-error": "^1.1.4"
@@ -26,5 +26,22 @@
     "babel-preset-env": "^1.7.0",
     "chai": "^4.1.2",
     "run-script-os-fix": "^1.0.4"
-  }
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zabkwak/runtime-type.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zabkwak/runtime-type/issues"
+  },
+  "homepage": "https://github.com/zabkwak/runtime-type#readme",
+  "keywords": [
+    "data-type",
+    "runtime",
+    "casting"
+  ],
+  "readme": "README.md"
 }
