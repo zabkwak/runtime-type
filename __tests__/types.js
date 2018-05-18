@@ -69,6 +69,24 @@ describe('Boolean type', () => {
     });
 });
 
+describe('Date type', () => {
+
+    it('checks the validators', () => {
+        expect(Type.date.isValid(new Date())).to.be.true;
+        expect(Type.date.isValid(0)).to.be.true;
+        expect(Type.date.isValid('2018-05-18')).to.be.true;
+        expect(Type.date.isValid(-1)).to.be.true;
+        expect(Type.date.isValid('baflek')).to.be.false;
+    });
+
+    it('casts the values to date', () => {
+        expect(Type.date.cast(new Date()).getTime()).to.be.equal(new Date().getTime());
+        expect(Type.date.cast(0).getTime()).to.be.equal(new Date('1970-01-01 01:00:00').getTime()); // TODO CET!!!
+        expect(Type.date.cast('2018-05-18').getTime()).to.be.equal(new Date('2018-05-18').getTime());
+        castError(Type.date, 'baflek');
+    });
+});
+
 describe('Object type', () => {
 
     class Test { }

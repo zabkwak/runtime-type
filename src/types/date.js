@@ -9,9 +9,9 @@ export default class DateType extends Base {
             return null;
         }
         const v = new Date(value);
-        /*if (isNaN(v)) {
+        if (isNaN(v.getTime())) {
             this._throwInvalidCast(value, 'date');
-        }*/
+        }
         return v;
     }
 
