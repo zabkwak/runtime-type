@@ -69,6 +69,16 @@ describe('Boolean type', () => {
     });
 });
 
+describe('String type', () => {
+
+    it('casts the values to the string', () => {
+        expect(Type.string.cast(5)).to.be.equal('5');
+        expect(Type.string.cast(5.5)).to.be.equal('5.5');
+        expect(Type.string.cast({})).to.be.equal('[object Object]');
+        expect(Type.string.cast(Type.any)).to.be.equal('any');
+    });
+});
+
 describe('Date type', () => {
 
     it('checks the validators', () => {
@@ -237,6 +247,3 @@ describe('toString()', () => {
         expect(Type.string.toString()).to.be.equal('string');
     });
 });
-
-// TODO date
-// TODO string
