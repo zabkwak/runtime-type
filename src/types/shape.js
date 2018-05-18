@@ -36,4 +36,10 @@ export default class Shape extends Base {
         });
         return o;
     }
+
+    toString() {
+        const o = {};
+        Object.keys(this._shape).forEach((key) => o[key] = this._shape[key].toString());
+        return `shape(${JSON.stringify(o)})`;
+    }
 }

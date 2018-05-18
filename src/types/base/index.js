@@ -23,6 +23,10 @@ export default class Type {
         }
     }
 
+    toString() {
+        return this.constructor.name.toLowerCase();
+    }
+
     /**
      * 
      * @param {*} value 

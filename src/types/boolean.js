@@ -16,4 +16,8 @@ export default class BooleanType extends Base {
     getDefaultValue() {
         return false;
     }
+
+    toString() {
+        return 'boolean';
+    }
 }

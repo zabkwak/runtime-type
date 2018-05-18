@@ -187,6 +187,23 @@ describe('Shape type', () => {
     });
 });
 
+describe('toString()', () => {
+
+    it('calls toString method on every type', () => {
+        expect(Type.any.toString()).to.be.equal('any');
+        expect(Type.arrayOf(Type.any).toString()).to.be.equal('any[]');
+        expect(Type.boolean.toString()).to.be.equal('boolean');
+        expect(Type.date.toString()).to.be.equal('date');
+        expect(Type.enum('test', 'test', 'baf', 'lek').toString()).to.be.equal('enum(\'test\',\'baf\',\'lek\')');
+        expect(Type.float.toString()).to.be.equal('float');
+        expect(Type.instanceOf(Date).toString()).to.be.equal('Date');
+        expect(Type.integer.toString()).to.be.equal('integer');
+        expect(Type.object.toString()).to.be.equal('object');
+        expect(Type.shape({ test: Type.integer }).toString()).to.be.equal('shape({"test":"integer"})');
+        expect(Type.string.toString()).to.be.equal('string');
+    })
+});
+
 // TODO float
 // TODO date
 // TODO string

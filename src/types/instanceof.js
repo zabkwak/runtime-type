@@ -16,4 +16,8 @@ export default class InstanceOf extends Base {
         }
         return value;
     }
+
+    toString() {
+        return this._class.name;
+    }
 }

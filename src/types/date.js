@@ -18,4 +18,8 @@ export default class DateType extends Base {
     getDefaultValue() {
         return new Date();
     }
+
+    toString() {
+        return 'date';
+    }
 }

@@ -10,4 +10,8 @@ export default class ObjectType extends Base {
         }
         return value;
     }
+
+    toString() {
+        return 'object';
+    }
 }
