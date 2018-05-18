@@ -26,26 +26,26 @@ Checks if the value is valid. It calls the `cast` method and if the cast is succ
 ### any
 It's just a placeholder. The value is returned in `cast` method and `isValid` is always `true`. 
 ### arrayOf
-**function**  
-The parameter of the function is one of the types. The values of array in the `cast` method are casted by the type.
+**function(type: Type)**  
+The values of array in the `cast` method are casted by the `type`.
 ### boolean
 The value is validated with the base javascript `Boolean` function in `cast` method. If the value is `'false'` or `'0'` it's casted as `false`.  
 ### date
 The value is used as parameter in the `Date` constructor in `cast` method.
 ### enum
-**function**  
-TBD
+**function(defaultValue: string, ...values: string[])**  
+The `cast` method checks if the value is in the `values` array.
 ### float
 The value is parsed by `parseFloat` function in `cast` method.
 ### instanceOf
-**function**  
+**function(cls: Class)**  
 Equivivalent of the `instanceof`.
 ### integer
 The value is parsed by `parseInt` function in `cast` method.
 ### object
-TBD
+The value is validated with `typeof value === 'object'`. 
 ### shape
-**functions**  
-TBD
+**function(shape: Object.<string, Type>)**  
+The value's keys are validated with the specified types.
 ### string
-TBD
+The value is converted to string with `toString` method.
