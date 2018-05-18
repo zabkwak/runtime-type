@@ -37,6 +37,22 @@ describe('Integer type', () => {
     });
 });
 
+describe('Float type', () => {
+
+    const valid = ['5.5', 5.5, '5.5abc'];
+    const invalid = [null, undefined, 'abc5', new Date(), { a: 5 }, [5], { 5: 5 }];
+
+    it('checks the validators', () => {
+        valid.forEach(value => expect(Type.float.isValid(value)).to.be.true);
+        invalid.forEach(value => expect(Type.float.isValid(value)).to.be.false);
+    });
+
+    it('casts the values to the integer', () => {
+        valid.forEach(value => expect(Type.float.cast(value)).to.be.equal(5.5));
+        invalid.forEach(value => expect(castError(Type.float, value)));
+    });
+});
+
 describe('Boolean type', () => {
 
     const t = [5, '5', 'true'];
@@ -201,9 +217,8 @@ describe('toString()', () => {
         expect(Type.object.toString()).to.be.equal('object');
         expect(Type.shape({ test: Type.integer }).toString()).to.be.equal('shape({"test":"integer"})');
         expect(Type.string.toString()).to.be.equal('string');
-    })
+    });
 });
 
-// TODO float
 // TODO date
 // TODO string
