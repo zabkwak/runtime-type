@@ -229,6 +229,22 @@ describe('Shape type', () => {
             },
         })).to.be.false;
     });
+
+    it('checks the any types in shape', () => {
+        const s = Type.shape({
+            integer: Type.any,
+            string: Type.string
+        });
+        expect(s).to.be.an.instanceOf(BaseType);
+        expect(s.isValid({
+            integer: 1,
+            string: 'string',
+        })).to.be.true;
+        expect(s.isValid({
+            integer: 0,
+            string: 'string',
+        })).to.be.true;
+    });
 });
 
 describe('toString()', () => {

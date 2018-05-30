@@ -22,7 +22,7 @@ export default class Shape extends Base {
         const o = {};
         Object.keys(this._shape).forEach((key) => {
             const type = this._shape[key];
-            if (!value[key]) {
+            if (value[key] === undefined) {
                 throw new Error(`Missing key '${key}' in the shape.`, 'unsupported_operation');
             }
             try {
