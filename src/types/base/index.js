@@ -2,6 +2,14 @@ import Error from 'smart-error';
 
 export default class Type {
 
+    saveCast(value, defaultValue = this.getDefaultValue()) {
+        try {
+            return this.cast(value);
+        } catch (e) {
+            return defaultValue;
+        }
+    }
+
     getDefaultValue() { throw new Error(`Method ${this.constructor.name}.getDefaultValue() not implemented`, 'not_implemented'); }
 
     cast(value) { throw new Error(`Method ${this.constructor.name}.cast(value) not implemented`, 'not_implemented'); }

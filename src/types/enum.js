@@ -12,7 +12,7 @@ export default class Enum extends Base {
     constructor(defaultValue, ...values) {
         super();
         if (values.indexOf(defaultValue) < 0) {
-            throw new Error('Default value of the enum is not in defined values', 'unsupported_operation');
+            values.push(defaultValue);
         }
         this.defaultValue = defaultValue;
         this.values = values;

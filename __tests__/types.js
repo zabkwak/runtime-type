@@ -117,7 +117,7 @@ describe('Object type', () => {
 
 describe('Enum type', () => {
 
-    const en = Type.enum('test', 'test', 'baf');
+    const en = Type.enum('test', 'baf');
 
     it('checks if enum has all values', (done) => {
         expect(en).to.be.an.instanceOf(BaseType);
