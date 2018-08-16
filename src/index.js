@@ -23,12 +23,8 @@ export default {
     instanceOf: (Class) => new InstanceOf(Class),
     arrayOf: (type) => new ArrayOf(type),
     shape: (shape) => new Shape(shape),
-    /**
-     * 
-     * @param {string} defaultValue 
-     * @param {string[]} values 
-     */
     enum: (defaultValue, ...values) => new Enum(defaultValue, ...values),
+    enum_: (defaultValue, ...values) => new Enum(defaultValue, ...values),
 
     isValidType: (type) => type instanceof Type,
     Type,

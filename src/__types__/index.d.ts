@@ -1,6 +1,6 @@
 declare module 'runtime-type' {
 
-    class Type {
+    class BaseType {
         /**
          * Safely casts the value to the type. If the cast fails, the default value of the Type is returned.
          * @param value Value to cast.
@@ -43,11 +43,11 @@ declare module 'runtime-type' {
         toString(): string;
     }
 
-    class NullableType extends Type {
-        getDefaultValue(): null;
+    class NullableType extends BaseType {
+        getDefaultValue(): any;
     }
 
-    class NumericType extends Type {
+    class NumericType extends BaseType {
         /**
          * Casts the value to number.
          * @param value Value to cast.
@@ -89,7 +89,7 @@ declare module 'runtime-type' {
         getDefaultValue(): Date;
         toString(): 'integer';
     }
-    class BooleanType extends Type {
+    class BooleanType extends BaseType {
         /**
          * Casts the value to the boolean using `Boolean` function. The values `'false'`, `'0'` are casted to `false`.
          * @param value Value to cast.
@@ -98,7 +98,7 @@ declare module 'runtime-type' {
         getDefaultValue(): false;
         toString(): 'boolean';
     }
-    class ObjectType extends Type {
+    class ObjectType extends BaseType {
         /**
          * Returns the value if the value is `typeof 'object'`.
          * @param value Value to cast.
@@ -107,7 +107,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
         toString(): 'object';
     }
-    class AnyType extends Type {
+    class AnyType extends BaseType {
         /**
          * It just returns the value.
          * @param value Value to cast.
@@ -127,7 +127,7 @@ declare module 'runtime-type' {
         toString(): string;
     }
     class ArrayOf extends NullableType {
-        constructor(type: Type);
+        constructor(type: BaseType);
         /**
          * Casts all of values elements to Type specified in the constructor.
          * @param value Array to cast.
@@ -136,7 +136,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
     }
     class Shape extends NullableType {
-        constructor(shape: { [key: string]: Type });
+        constructor(shape: { [key: string]: BaseType });
         /**
          * Casts all of the shape values to the shape of Types specified in the constructor.
          * @param value Shape to cast.
@@ -145,7 +145,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
     }
 
-    class Enum extends Type {
+    class Enum extends BaseType {
         constructor(...values: string[]);
         /**
          * 
@@ -162,19 +162,21 @@ declare module 'runtime-type' {
         getDefaultValue(): string;
     }
 
-    export default {
-        integer: new Integer(),
-        float: new Float(),
-        string: new String(),
-        date: new DateType(),
-        boolean: new BooleanType(),
-        object: new ObjectType(),
-        any: new AnyType(),
-        instanceOf: (cls: typeof Object): InstanceOf => new InstanceOf(cls),
-        arrayOf: (type: Type): ArrayOf => new ArrayOf(type),
-        shape: (shape: { [key: string]: Type }): Shape => new Shape(type),
-        enum: (...values: string[]): Enum => new Enum(...values),
-        isValidType: (type: any): boolean => type instanceof Type,
-        Type: Type,
+    namespace RuntimeType {
+        export const integer: Integer;
+        export const float: Float;
+        export const string: String;
+        export const date: DateType;
+        export const boolean: BooleanType;
+        export const object: ObjectType;
+        export const any: AnyType;
+        export function instanceOf(cls: typeof Object): InstanceOf;
+        export function arrayOf(type: Type): ArrayOf;
+        export function shape(shape: { [key: string]: Type }): Shape;
+        export function enum_(...values: string[]): Enum;
+        export function isValidType(type: any): boolean;
+        export type Type = BaseType;
     }
+
+    export default RuntimeType;
 }
