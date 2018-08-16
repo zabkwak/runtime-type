@@ -3,6 +3,7 @@
   "version": "1.2.0",
   "description": "Module for casting to types at runtime.",
   "main": "index.js",
+  "types": "./dist/__types__/index.d.ts",
   "scripts": {
     "test": "mocha __tests__ --recursive --compilers js:babel-core/register",
     "create_index": "run-script-os",
@@ -16,7 +17,7 @@
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "smart-error": "^1.1.4"
+    "smart-error": "^1.2.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
