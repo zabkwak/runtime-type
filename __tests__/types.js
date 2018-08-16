@@ -91,7 +91,7 @@ describe('Date type', () => {
 
     it('casts the values to date', () => {
         expect(Type.date.cast(new Date()).getTime()).to.be.equal(new Date().getTime());
-        expect(Type.date.cast(0).getTime()).to.be.equal(new Date('1970-01-01 01:00:00').getTime()); // TODO CET!!!
+        expect(Type.date.cast(0).getTime()).to.be.equal(new Date('1970-01-01 00:00:00').getTime()); // TODO CET!!!
         expect(Type.date.cast('2018-05-18').getTime()).to.be.equal(new Date('2018-05-18').getTime());
         castError(Type.date, 'baflek');
     });
@@ -200,6 +200,10 @@ describe('Shape type', () => {
         expect(Type.shape(shape).cast({ integer: 5, string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
         expect(Type.shape(shape).cast({ integer: '5', string: 'string' })).to.deep.equal({ integer: 5, string: 'string' });
         castError(Type.shape(shape), { integer: 'string', string: 'string' });
+    });
+
+    it('tries to cast the shape with field which is not defined in the shape definition', () => {
+        expect(Type.shape(shape).isValid({ integer: 1, string: 'string', not_defined: 'not defined' })).to.be.false;
     });
 
     it('tries to cast the type with missing key', () => {

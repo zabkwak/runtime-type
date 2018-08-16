@@ -34,6 +34,11 @@ export default class Shape extends Base {
                 throw e;
             }
         });
+        Object.keys(value).forEach((key) => {
+            if (this._shape[key] === undefined) {
+                throw new Error(`The key '${key}' is not defined in the shape.`, 'unsupported_operation');
+            }
+        });
         return o;
     }
 
