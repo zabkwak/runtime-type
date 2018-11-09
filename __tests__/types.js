@@ -91,7 +91,7 @@ describe('Date type', () => {
 
     it('casts the values to date', () => {
         expect(Type.date.cast(new Date()).getTime()).to.be.equal(new Date().getTime());
-        expect(Type.date.cast(0).getTime()).to.be.equal(new Date('1970-01-01 00:00:00').getTime()); // TODO CET!!!
+        expect(Type.date.cast(0).getTime()).to.be.equal(new Date('1970-01-01 01:00:00').getTime()); // TODO CET!!!
         expect(Type.date.cast('2018-05-18').getTime()).to.be.equal(new Date('2018-05-18').getTime());
         castError(Type.date, 'baflek');
     });
@@ -297,5 +297,25 @@ describe('fromString(type)', () => {
         expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
         expect(() => Type.fromString('shape({"test":"test"})')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
 
+    });
+});
+
+describe('Instance comparing', () => {
+
+    it('compares the types', () => {
+        expect(Type.integer.compare(Type.integer)).to.be.true;
+        expect(Type.integer.compare(Type.string)).to.be.false;
+
+        expect(Type.arrayOf(Type.integer).compare(Type.arrayOf(Type.integer))).to.be.true;
+        expect(Type.arrayOf(Type.integer).compare(Type.arrayOf(Type.string))).to.be.false;
+
+        expect(Type.shape({ integer: Type.integer }).compare(Type.shape({ integer: Type.integer }))).to.be.true;
+        expect(Type.shape({ integer: Type.integer }).compare(Type.shape({ integer: Type.string }))).to.be.false;
+        expect(Type.shape({ integer: Type.integer }).compare(Type.shape({ string: Type.integer }))).to.be.false;
+        expect(Type.shape({ integer: Type.integer }).compare(Type.shape({ string: Type.string }))).to.be.false;
+
+        expect(Type.enum('test', 'baf', 'lek').compare(Type.enum('test', 'baf', 'lek'))).to.be.true;
+        expect(Type.enum('test', 'baf', 'lek').compare(Type.enum('test', 'baf'))).to.be.false;
+        expect(Type.enum('test', 'baf', 'lek').compare(Type.enum('test', 'lek', 'baf'))).to.be.false;
     });
 });

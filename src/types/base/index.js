@@ -35,6 +35,13 @@ export default class Type {
         return this.constructor.name.toLowerCase();
     }
 
+    compare(type) {
+        if (this === type) {
+            return true;
+        }
+        return this.toString() === type.toString();
+    }
+
     /**
      * 
      * @param {*} value 

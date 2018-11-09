@@ -38,6 +38,12 @@ declare module 'runtime-type' {
         isValid(value: any): boolean;
 
         /**
+         * Compares the type with another one. It uses strict equal or shalow compare of strings.
+         * @param type Type to compare.
+         */
+        compare(type: Type): boolean;
+
+        /**
          * Converts the type to string.
          */
         toString(): string;
