@@ -41,7 +41,7 @@ declare module 'runtime-type' {
          * Compares the type with another one. It uses strict equal or shalow compare of strings.
          * @param type Type to compare.
          */
-        compare(type: Type): boolean;
+        compare(type: BaseType): boolean;
 
         /**
          * Converts the type to string.
@@ -62,7 +62,7 @@ declare module 'runtime-type' {
         getDefaultValue(): 0;
     }
 
-    class Integer extends NumericType {
+    export class Integer extends NumericType {
         /**
          * Casts the value to number using `parseInt` function.
          * @param value Value to cast.
@@ -70,7 +70,7 @@ declare module 'runtime-type' {
         cast(value: any): number;
         toString(): 'integer';
     }
-    class Float extends NumericType {
+    export class Float extends NumericType {
         /**
          * Casts the value to number using `parseFloat` function.
          * @param value Value to cast.
@@ -78,7 +78,7 @@ declare module 'runtime-type' {
         cast(value: any): number;
         toString(): 'float';
     }
-    class String extends NullableType {
+    export class String extends NullableType {
         /**
          * Casts the value to the string calling `toString` method.
          * @param value Value to cast.
@@ -86,7 +86,7 @@ declare module 'runtime-type' {
         cast(value: any): string;
         toString(): 'string';
     }
-    class DateType extends NullableType {
+    export class DateType extends NullableType {
         /**
          * Creates a `Date` instance from the value. If the value is `null` it is just returned.
          * @param value Value to cast.
@@ -95,7 +95,7 @@ declare module 'runtime-type' {
         getDefaultValue(): Date;
         toString(): 'integer';
     }
-    class BooleanType extends BaseType {
+    export class BooleanType extends BaseType {
         /**
          * Casts the value to the boolean using `Boolean` function. The values `'false'`, `'0'` are casted to `false`.
          * @param value Value to cast.
@@ -104,7 +104,7 @@ declare module 'runtime-type' {
         getDefaultValue(): false;
         toString(): 'boolean';
     }
-    class ObjectType extends BaseType {
+    export class ObjectType extends BaseType {
         /**
          * Returns the value if the value is `typeof 'object'`.
          * @param value Value to cast.
@@ -113,7 +113,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
         toString(): 'object';
     }
-    class AnyType extends BaseType {
+    export class AnyType extends BaseType {
         /**
          * It just returns the value.
          * @param value Value to cast.
@@ -122,7 +122,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
         toString(): 'any';
     }
-    class InstanceOf extends NullableType {
+    export class InstanceOf extends NullableType {
         constructor(cls: typeof Object);
         /**
          * Returns the value if the values is `instanceOf` class from the constructor.
@@ -132,16 +132,16 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
         toString(): string;
     }
-    class ArrayOf extends NullableType {
+    export class ArrayOf extends NullableType {
         constructor(type: BaseType);
         /**
          * Casts all of values elements to Type specified in the constructor.
          * @param value Array to cast.
          */
-        cast(values: any[]): any[];
+        cast<T = any>(values: any[]): T[];
         getDefaultValue(): any;
     }
-    class Shape extends NullableType {
+    export class Shape extends NullableType {
         constructor(shape: { [key: string]: BaseType });
         /**
          * Casts all of the shape values to the shape of Types specified in the constructor.
@@ -151,7 +151,7 @@ declare module 'runtime-type' {
         getDefaultValue(): any;
     }
 
-    class Enum extends BaseType {
+    export class Enum extends BaseType {
         constructor(...values: string[]);
         /**
          * 
@@ -181,7 +181,7 @@ declare module 'runtime-type' {
         export function shape(shape: { [key: string]: Type }): Shape;
         export function enum_(...values: string[]): Enum;
         export function isValidType(type: any): boolean;
-        export function fromString(type: string): Type;
+        export function fromString<T extends Type = BaseType>(type: string): T;
         export type Type = BaseType;
     }
 
