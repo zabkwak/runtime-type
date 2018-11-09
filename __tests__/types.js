@@ -267,3 +267,35 @@ describe('toString()', () => {
         expect(Type.string.toString()).to.be.equal('string');
     });
 });
+
+describe('fromString(type)', () => {
+
+    it('gets the valid type from string', () => {
+        expect(Type.fromString('integer')).to.be.equal(Type.integer);
+        expect(Type.fromString('float')).to.be.equal(Type.float);
+        expect(Type.fromString('string')).to.be.equal(Type.string);
+        expect(Type.fromString('date')).to.be.equal(Type.date);
+        expect(Type.fromString('boolean')).to.be.equal(Type.boolean);
+        expect(Type.fromString('object')).to.be.equal(Type.object);
+        expect(Type.fromString('any')).to.be.equal(Type.any);
+
+        expect(Type.fromString('integer[]').toString()).to.be.equal(Type.arrayOf(Type.integer).toString());
+        expect(Type.fromString('float[]').toString()).to.be.equal(Type.arrayOf(Type.float).toString());
+        expect(Type.fromString('string[]').toString()).to.be.equal(Type.arrayOf(Type.string).toString());
+        expect(Type.fromString('date[]').toString()).to.be.equal(Type.arrayOf(Type.date).toString());
+        expect(Type.fromString('boolean[]').toString()).to.be.equal(Type.arrayOf(Type.boolean).toString());
+        expect(Type.fromString('object[]').toString()).to.be.equal(Type.arrayOf(Type.object).toString());
+        expect(Type.fromString('any[]').toString()).to.be.equal(Type.arrayOf(Type.any).toString());
+
+        expect(Type.fromString('enum(\'test\',\'baf\',\'lek\')').toString()).to.be.equal(Type.enum('test', 'baf', 'lek').toString());
+        expect(Type.fromString('enum(test, baf, lek)').toString()).to.be.equal(Type.enum('test', 'baf', 'lek').toString());
+
+        expect(Type.fromString('shape({"test":"integer"})').toString()).to.be.equal(Type.shape({ test: Type.integer }).toString());
+        expect(Type.fromString('shape({"test":"integer","string":"string"})').toString()).to.be.equal(Type.shape({ test: Type.integer, string: Type.string }).toString());
+
+        expect(() => Type.fromString('test')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+        expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+        expect(() => Type.fromString('shape({"test":"test"})')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+
+    });
+});
