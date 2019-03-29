@@ -14,4 +14,8 @@ export default class ObjectType extends Base {
     toString() {
         return 'object';
     }
+
+    _getTypeOf() {
+        return 'object';
+    }
 }

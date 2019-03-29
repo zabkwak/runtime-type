@@ -10,9 +10,17 @@ export default class Type {
         }
     }
 
-    getDefaultValue() { throw new Error(`Method ${this.constructor.name}.getDefaultValue() not implemented`, 'not_implemented'); }
+    getDefaultValue() {
+        throw new Error(`Method ${this.constructor.name}.getDefaultValue() not implemented`, 'not_implemented');
+    }
 
-    cast(value) { throw new Error(`Method ${this.constructor.name}.cast(value) not implemented`, 'not_implemented'); }
+    cast(value) {
+        throw new Error(`Method ${this.constructor.name}.cast(value) not implemented`, 'not_implemented');
+    }
+
+    isValidType(value) {
+        return typeof value === this._getTypeOf();
+    }
 
     getName() {
         return this.constructor.name;
@@ -23,6 +31,10 @@ export default class Type {
     }
 
     isValid(value) {
+        return this.canCast(value) && this.isValidType(value);
+    }
+
+    canCast(value) {
         try {
             this.cast(value);
             return true;
@@ -40,6 +52,10 @@ export default class Type {
             return true;
         }
         return this.toString() === type.toString();
+    }
+
+    _getTypeOf() {
+        throw new Error(`Method ${this.constructor.name}._getTypeOf() not implemented`, 'not_implemented');
     }
 
     /**

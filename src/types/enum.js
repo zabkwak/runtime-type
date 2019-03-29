@@ -41,4 +41,8 @@ export default class Enum extends Base {
     toString() {
         return `enum(${this.values.map(item => `'${item}'`).join(',')})`;
     }
+
+    _getTypeOf() {
+        return 'string';
+    }
 }

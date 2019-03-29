@@ -12,12 +12,28 @@ describe('Any type', () => {
 
     const values = [5, '5', 5.5, 'abc', null, undefined, new Date(), { a: 5 }, [5], { 5: 5 }];
 
-    it('checks the validators', () => {
-        values.forEach(value => expect(Type.any.isValid(value)).to.be.true);
+    it('checks the cast validators', () => {
+        values.forEach(value => expect(Type.any.canCast(value)).to.be.true);
     });
 
     it('casts the values to the any', () => {
         values.forEach(value => expect(Type.any.cast(value)).to.be.equal(value));
+    });
+
+    it('tests the typeof', () => {
+        expect(Type.any.isValidType(5)).to.be.true;
+        expect(Type.any.isValidType('5')).to.be.true;
+        expect(Type.any.isValidType(5.5)).to.be.true;
+        expect(Type.any.isValidType(true)).to.be.true;
+        expect(Type.any.isValidType({})).to.be.true;
+    });
+
+    it('strictly tests the type', () => {
+        expect(Type.any.isValid(5)).to.be.true;
+        expect(Type.any.isValid('5')).to.be.true;
+        expect(Type.any.isValid(5.5)).to.be.true;
+        expect(Type.any.isValid(true)).to.be.true;
+        expect(Type.any.isValid([])).to.be.true;
     });
 });
 
@@ -26,14 +42,30 @@ describe('Integer type', () => {
     const valid = [5, '5', 5.5, '5abc'];
     const invalid = [null, undefined, 'abc5', new Date(), { a: 5 }, [5], { 5: 5 }];
 
-    it('checks the validators', () => {
-        valid.forEach(value => expect(Type.integer.isValid(value)).to.be.true);
-        invalid.forEach(value => expect(Type.integer.isValid(value)).to.be.false);
+    it('checks the cast validators', () => {
+        valid.forEach(value => expect(Type.integer.canCast(value)).to.be.true);
+        invalid.forEach(value => expect(Type.integer.canCast(value)).to.be.false);
     });
 
     it('casts the values to the integer', () => {
         valid.forEach(value => expect(Type.integer.cast(value)).to.be.equal(5));
         invalid.forEach(value => expect(castError(Type.integer, value)));
+    });
+
+    it('tests the typeof', () => {
+        expect(Type.integer.isValidType(5)).to.be.true;
+        expect(Type.integer.isValidType('5')).to.be.false;
+        expect(Type.integer.isValidType(5.5)).to.be.false;
+        expect(Type.integer.isValidType(true)).to.be.false;
+        expect(Type.integer.isValidType([])).to.be.false;
+    });
+
+    it('strictly tests the type', () => {
+        expect(Type.integer.isValid(5)).to.be.true;
+        expect(Type.integer.isValid('5')).to.be.false;
+        expect(Type.integer.isValid(5.5)).to.be.false;
+        expect(Type.integer.isValid(true)).to.be.false;
+        expect(Type.integer.isValid([])).to.be.false;
     });
 });
 
@@ -42,14 +74,30 @@ describe('Float type', () => {
     const valid = ['5.5', 5.5, '5.5abc'];
     const invalid = [null, undefined, 'abc5', new Date(), { a: 5 }, [5], { 5: 5 }];
 
-    it('checks the validators', () => {
-        valid.forEach(value => expect(Type.float.isValid(value)).to.be.true);
-        invalid.forEach(value => expect(Type.float.isValid(value)).to.be.false);
+    it('checks the cast validators', () => {
+        valid.forEach(value => expect(Type.float.canCast(value)).to.be.true);
+        invalid.forEach(value => expect(Type.float.canCast(value)).to.be.false);
     });
 
     it('casts the values to the integer', () => {
         valid.forEach(value => expect(Type.float.cast(value)).to.be.equal(5.5));
         invalid.forEach(value => expect(castError(Type.float, value)));
+    });
+
+    it('tests the typeof', () => {
+        expect(Type.float.isValidType(5)).to.be.true;
+        expect(Type.float.isValidType('5')).to.be.false;
+        expect(Type.float.isValidType(5.5)).to.be.true;
+        expect(Type.float.isValidType(true)).to.be.false;
+        expect(Type.float.isValidType([])).to.be.false;
+    });
+
+    it('strictly tests the type', () => {
+        expect(Type.float.isValid(5)).to.be.true;
+        expect(Type.float.isValid('5')).to.be.false;
+        expect(Type.float.isValid(5.5)).to.be.true;
+        expect(Type.float.isValid(true)).to.be.false;
+        expect(Type.float.isValid([])).to.be.false;
     });
 });
 
@@ -58,14 +106,30 @@ describe('Boolean type', () => {
     const t = [5, '5', 'true'];
     const f = [0, '0', 'false'];
 
-    it('checks the validators', () => {
-        t.forEach(value => expect(Type.boolean.isValid(value)).to.be.true);
-        f.forEach(value => expect(Type.boolean.isValid(value)).to.be.true);
+    it('checks the cast validators', () => {
+        t.forEach(value => expect(Type.boolean.canCast(value)).to.be.true);
+        f.forEach(value => expect(Type.boolean.canCast(value)).to.be.true);
     });
 
     it('casts the values to the boolean', () => {
         t.forEach(value => expect(Type.boolean.cast(value)).to.be.true);
         f.forEach(value => expect(Type.boolean.cast(value)).to.be.false);
+    });
+
+    it('tests the typeof', () => {
+        expect(Type.boolean.isValidType(5)).to.be.false;
+        expect(Type.boolean.isValidType('5')).to.be.false;
+        expect(Type.boolean.isValidType(5.5)).to.be.false;
+        expect(Type.boolean.isValidType(true)).to.be.true;
+        expect(Type.boolean.isValidType([])).to.be.false;
+    });
+
+    it('strictly tests the type', () => {
+        expect(Type.boolean.isValid(5)).to.be.false;
+        expect(Type.boolean.isValid('5')).to.be.false;
+        expect(Type.boolean.isValid(5.5)).to.be.false;
+        expect(Type.boolean.isValid(true)).to.be.true;
+        expect(Type.boolean.isValid([])).to.be.false;
     });
 });
 
@@ -77,16 +141,32 @@ describe('String type', () => {
         expect(Type.string.cast({})).to.be.equal('[object Object]');
         expect(Type.string.cast(Type.any)).to.be.equal('any');
     });
+
+    it('tests the typeof', () => {
+        expect(Type.string.isValidType(5)).to.be.false;
+        expect(Type.string.isValidType('5')).to.be.true;
+        expect(Type.string.isValidType(5.5)).to.be.false;
+        expect(Type.string.isValidType(true)).to.be.false;
+        expect(Type.string.isValidType([])).to.be.false;
+    });
+
+    it('strictly tests the type', () => {
+        expect(Type.string.isValid(5)).to.be.false;
+        expect(Type.string.isValid('5')).to.be.true;
+        expect(Type.string.isValid(5.5)).to.be.false;
+        expect(Type.string.isValid(true)).to.be.false;
+        expect(Type.string.isValid([])).to.be.false;
+    });
 });
 
 describe('Date type', () => {
 
-    it('checks the validators', () => {
-        expect(Type.date.isValid(new Date())).to.be.true;
-        expect(Type.date.isValid(0)).to.be.true;
-        expect(Type.date.isValid('2018-05-18')).to.be.true;
-        expect(Type.date.isValid(-1)).to.be.true;
-        expect(Type.date.isValid('baflek')).to.be.false;
+    it('checks the cast validators', () => {
+        expect(Type.date.canCast(new Date())).to.be.true;
+        expect(Type.date.canCast(0)).to.be.true;
+        expect(Type.date.canCast('2018-05-18')).to.be.true;
+        expect(Type.date.canCast(-1)).to.be.true;
+        expect(Type.date.canCast('baflek')).to.be.false;
     });
 
     it('casts the values to date', () => {
@@ -104,9 +184,9 @@ describe('Object type', () => {
     const valid = [null, {}, { a: 5 }, [], [5], new Date(), new Test(), new Error()];
     const invalid = [undefined, true, false, 5, 5.5];
 
-    it('checks the validators', () => {
-        valid.forEach(value => expect(Type.object.isValid(value)).to.be.true);
-        invalid.forEach(value => expect(Type.object.isValid(value)).to.be.false);
+    it('checks the cast validators', () => {
+        valid.forEach(value => expect(Type.object.canCast(value)).to.be.true);
+        invalid.forEach(value => expect(Type.object.canCast(value)).to.be.false);
     });
 
     /*it('casts the values to the boolean', () => {
@@ -144,14 +224,14 @@ describe('InstanceOf type', () => {
     class T { }
 
     it('checks if the values is instance of defined type', () => {
-        expect(Type.instanceOf(Array).isValid([])).to.be.true;
-        expect(Type.instanceOf(Array).isValid(new Date())).to.be.false;
+        expect(Type.instanceOf(Array).canCast([])).to.be.true;
+        expect(Type.instanceOf(Array).canCast(new Date())).to.be.false;
 
-        expect(Type.instanceOf(Date).isValid(new Date())).to.be.true;
-        expect(Type.instanceOf(Date).isValid([])).to.be.false;
+        expect(Type.instanceOf(Date).canCast(new Date())).to.be.true;
+        expect(Type.instanceOf(Date).canCast([])).to.be.false;
 
-        expect(Type.instanceOf(Error).isValid(new Error())).to.be.true;
-        expect(Type.instanceOf(T).isValid(new T())).to.be.true;
+        expect(Type.instanceOf(Error).canCast(new Error())).to.be.true;
+        expect(Type.instanceOf(T).canCast(new T())).to.be.true;
     });
 });
 
@@ -166,10 +246,10 @@ describe('ArrayOf type', () => {
     });
 
     it('checks if the array contains all valid types', () => {
-        expect(Type.arrayOf(Type.integer).isValid([1, 2, 3, 4, 5])).to.be.true;
-        expect(Type.arrayOf(Type.integer).isValid(['1', '2', '3', '4', '5'])).to.be.true;
-        expect(Type.arrayOf(Type.integer).isValid(['test', 'test'])).to.be.false;
-        expect(Type.arrayOf(Type.integer).isValid([new Date(), Date.now()])).to.be.false;
+        expect(Type.arrayOf(Type.integer).canCast([1, 2, 3, 4, 5])).to.be.true;
+        expect(Type.arrayOf(Type.integer).canCast(['1', '2', '3', '4', '5'])).to.be.true;
+        expect(Type.arrayOf(Type.integer).canCast(['test', 'test'])).to.be.false;
+        expect(Type.arrayOf(Type.integer).canCast([new Date(), Date.now()])).to.be.false;
     });
 
     it('tries to cast the type', () => {
@@ -191,9 +271,9 @@ describe('Shape type', () => {
     })
 
     it('checks if the shape contains all valid types', () => {
-        expect(Type.shape(shape).isValid({ integer: 5, string: 'string' })).to.be.true;
-        expect(Type.shape(shape).isValid({ integer: '5', string: 'string' })).to.be.true;
-        expect(Type.shape(shape).isValid({ integer: 'string', string: 'string' })).to.be.false;
+        expect(Type.shape(shape).canCast({ integer: 5, string: 'string' })).to.be.true;
+        expect(Type.shape(shape).canCast({ integer: '5', string: 'string' })).to.be.true;
+        expect(Type.shape(shape).canCast({ integer: 'string', string: 'string' })).to.be.false;
     });
 
     it('tries to cast the type', () => {
@@ -203,7 +283,7 @@ describe('Shape type', () => {
     });
 
     it('tries to cast the shape with field which is not defined in the shape definition', () => {
-        expect(Type.shape(shape).isValid({ integer: 1, string: 'string', not_defined: 'not defined' })).to.be.false;
+        expect(Type.shape(shape).canCast({ integer: 1, string: 'string', not_defined: 'not defined' })).to.be.false;
     });
 
     it('tries to cast the type with missing key', () => {
@@ -216,7 +296,7 @@ describe('Shape type', () => {
             shape: Type.shape(shape),
         });
         expect(s).to.be.an.instanceOf(BaseType);
-        expect(s.isValid({
+        expect(s.canCast({
             integer: 5,
             string: 'string',
             shape: {
@@ -224,7 +304,7 @@ describe('Shape type', () => {
                 string: 'string',
             },
         })).to.be.true;
-        expect(s.isValid({
+        expect(s.canCast({
             integer: 5,
             string: 'string',
             shape: {
@@ -240,11 +320,11 @@ describe('Shape type', () => {
             string: Type.string
         });
         expect(s).to.be.an.instanceOf(BaseType);
-        expect(s.isValid({
+        expect(s.canCast({
             integer: 1,
             string: 'string',
         })).to.be.true;
-        expect(s.isValid({
+        expect(s.canCast({
             integer: 0,
             string: 'string',
         })).to.be.true;

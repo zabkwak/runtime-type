@@ -5,4 +5,12 @@ export default class Any extends Base {
     cast(value) {
         return value;
     }
+
+    isValidType(value) {
+        return true;
+    }
+
+    _getTypeOf() {
+        return null;
+    }
 }

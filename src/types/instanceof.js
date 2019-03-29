@@ -20,4 +20,12 @@ export default class InstanceOf extends Base {
     toString() {
         return this._class.name;
     }
+
+    isValidType() {
+        return true;
+    }
+
+    _getTypeOf() {
+        return null;
+    }
 }

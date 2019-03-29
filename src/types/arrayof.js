@@ -39,4 +39,8 @@ export default class ArrayOf extends Base {
     toString() {
         return `${this._type}[]`;
     }
+
+    _getTypeOf() {
+        return 'object';
+    }
 }

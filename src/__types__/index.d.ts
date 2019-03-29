@@ -1,65 +1,81 @@
 declare module 'runtime-type' {
 
-    class BaseType {
+    abstract class BaseType {
         /**
          * Safely casts the value to the type. If the cast fails, the default value of the Type is returned.
          * @param value Value to cast.
          */
-        saveCast(value: any): any;
+        public saveCast(value: any): any;
         /**
          * Safely casts the value to the type. If the cast fails, the default value is returned.
          * @param value Value to cast.
          * @param defaultValue Returning value if the cast fails.
          */
-        saveCast(value: any, defaultValue: any): any;
+        public saveCast(value: any, defaultValue: any): any;
 
         /**
          * Gets the default value of the Type.
          * @abstract
          */
-        getDefaultValue(): any;
+        public abstract getDefaultValue(): any;
 
         /**
          * Casts the value to the Type.
          * @param value Value to cast.
          * @abstract
          */
-        cast(value: any): any;
+        public abstract cast(value: any): any;
 
         /**
          * Gets the name of the type.
          */
-        getName(): string;
+        public getName(): string;
 
         /**
          * Checks if the value is valid Type.
          * @param value Value to check.
          */
-        isValid(value: any): boolean;
+        public canCast(value: any): boolean;
+
+        /**
+         * Checks if the value has valid typeof.
+         * @param value Value to check.
+         */
+        public isValidType(value: any): boolean;
+
+        /**
+         * Check if the value is valid and has valid type.
+         * @param value Value to check.
+         */
+        public isValid(value: any): boolean;
 
         /**
          * Compares the type with another one. It uses strict equal or shalow compare of strings.
          * @param type Type to compare.
          */
-        compare(type: BaseType): boolean;
+        public compare(type: BaseType): boolean;
 
         /**
          * Converts the type to string.
          */
-        toString(): string;
+        public toString(): string;
+
+        protected abstract _getTypeOf(): string;
     }
 
-    class NullableType extends BaseType {
-        getDefaultValue(): any;
+    abstract class NullableType extends BaseType {
+        public getDefaultValue(): any;
     }
 
-    class NumericType extends BaseType {
+    abstract class NumericType extends BaseType {
         /**
          * Casts the value to number.
          * @param value Value to cast.
          */
-        cast(value: any): number;
-        getDefaultValue(): 0;
+        public cast(value: any): number;
+        public getDefaultValue(): 0;
+        protected abstract _cast(value: any): number;
+        protected _getTypeOf(): string;
     }
 
     export class Integer extends NumericType {
@@ -67,70 +83,80 @@ declare module 'runtime-type' {
          * Casts the value to number using `parseInt` function.
          * @param value Value to cast.
          */
-        cast(value: any): number;
-        toString(): 'integer';
+        protected _cast(value: any): number;
+        public toString(): 'integer';
+        /**
+         * It checks if the value is number and if the value is not decimal.
+         */
+        public isValidType(value: any): boolean;
     }
     export class Float extends NumericType {
         /**
          * Casts the value to number using `parseFloat` function.
          * @param value Value to cast.
          */
-        cast(value: any): number;
-        toString(): 'float';
+        protected _cast(value: any): number;
+        public toString(): 'float';
     }
     export class String extends NullableType {
         /**
          * Casts the value to the string calling `toString` method.
          * @param value Value to cast.
          */
-        cast(value: any): string;
-        toString(): 'string';
+        public cast(value: any): string;
+        public toString(): 'string';
+        protected _getTypeOf(): string;
     }
     export class DateType extends NullableType {
         /**
          * Creates a `Date` instance from the value. If the value is `null` it is just returned.
          * @param value Value to cast.
          */
-        cast(value: any): Date;
-        getDefaultValue(): Date;
-        toString(): 'integer';
+        public cast(value: any): Date;
+        public getDefaultValue(): Date;
+        public toString(): 'date';
+        protected _getTypeOf(): string;
     }
     export class BooleanType extends BaseType {
         /**
          * Casts the value to the boolean using `Boolean` function. The values `'false'`, `'0'` are casted to `false`.
          * @param value Value to cast.
          */
-        cast(value: any): boolean;
-        getDefaultValue(): false;
-        toString(): 'boolean';
+        public cast(value: any): boolean;
+        public getDefaultValue(): false;
+        public toString(): 'boolean';
+        protected _getTypeOf(): string;
     }
     export class ObjectType extends BaseType {
         /**
          * Returns the value if the value is `typeof 'object'`.
          * @param value Value to cast.
          */
-        cast(value: any): any;
-        getDefaultValue(): any;
-        toString(): 'object';
+        public cast(value: any): any;
+        public getDefaultValue(): any;
+        public toString(): 'object';
+        protected _getTypeOf(): string;
     }
     export class AnyType extends BaseType {
         /**
          * It just returns the value.
          * @param value Value to cast.
          */
-        cast(value: any): any;
-        getDefaultValue(): any;
-        toString(): 'any';
+        public cast(value: any): any;
+        public getDefaultValue(): any;
+        public toString(): 'any';
+        protected _getTypeOf(): string;
     }
     export class InstanceOf extends NullableType {
         constructor(cls: typeof Object);
         /**
-         * Returns the value if the values is `instanceOf` class from the constructor.
+         * Returns the value if the value is `instanceOf` class from the constructor.
          * @param value Value to cast.
          */
-        cast(value: any): any;
-        getDefaultValue(): any;
-        toString(): string;
+        public cast(value: any): any;
+        public getDefaultValue(): any;
+        public toString(): string;
+        protected _getTypeOf(): string;
     }
     export class ArrayOf extends NullableType {
         constructor(type: BaseType);
@@ -138,8 +164,9 @@ declare module 'runtime-type' {
          * Casts all of values elements to Type specified in the constructor.
          * @param value Array to cast.
          */
-        cast<T = any>(values: any[]): T[];
-        getDefaultValue(): any;
+        public cast<T = any>(values: any[]): T[];
+        public getDefaultValue(): any;
+        protected _getTypeOf(): string;
     }
     export class Shape extends NullableType {
         constructor(shape: { [key: string]: BaseType });
@@ -147,8 +174,9 @@ declare module 'runtime-type' {
          * Casts all of the shape values to the shape of Types specified in the constructor.
          * @param value Shape to cast.
          */
-        cast(value: any): { [key: string]: any };
-        getDefaultValue(): any;
+        public cast(value: any): { [key: string]: any };
+        public getDefaultValue(): any;
+        protected _getTypeOf(): string;
     }
 
     export class Enum extends BaseType {
@@ -164,8 +192,9 @@ declare module 'runtime-type' {
          * Returns the value if the value is defined in the values in the constructor.
          * @param value Value to cast.
          */
-        cast(value: any): string;
-        getDefaultValue(): string;
+        public cast(value: any): string;
+        public getDefaultValue(): string;
+        protected _getTypeOf(): string;
     }
 
     namespace RuntimeType {

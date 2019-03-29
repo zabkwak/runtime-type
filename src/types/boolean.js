@@ -20,4 +20,8 @@ export default class BooleanType extends Base {
     toString() {
         return 'boolean';
     }
+
+    _getTypeOf() {
+        return 'boolean';
+    }
 }

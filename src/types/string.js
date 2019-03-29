@@ -10,4 +10,8 @@ export default class String extends Base {
         }
         return null;
     }
+
+    _getTypeOf() {
+        return 'string';
+    }
 }

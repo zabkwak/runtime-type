@@ -47,4 +47,8 @@ export default class Shape extends Base {
         Object.keys(this._shape).forEach((key) => o[key] = this._shape[key].toString());
         return `shape(${JSON.stringify(o)})`;
     }
+
+    _getTypeOf() {
+        return 'object';
+    }
 }

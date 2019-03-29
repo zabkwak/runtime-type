@@ -24,6 +24,10 @@ export default class Numeric extends Base {
         return 0;
     }
 
+    _getTypeOf() {
+        return 'number';
+    }
+
     _cast(value) {
         throw new Error(`Method ${this.constructor.name}._cast(value) not implemented`, 'not_implemented');
     }
