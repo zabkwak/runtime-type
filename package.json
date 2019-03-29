@@ -17,7 +17,7 @@
   "author": "Lukáš Mačuda <lukas.macuda@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "smart-error": "^1.2.2"
+    "smart-error": "^2.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
