@@ -56,7 +56,7 @@ Checks if the value is strictly valid. Calls `canCast(value)` and `isValidType(v
 The `enum_` function is alias to `enum` because of typescript.
 
 ## Migrating to v3
-The `isValid` method now validates the value strictly as mentioned above. The easiest way to migrate is just to rename all references to `canCast`.
+The `isValid` method now validates the value strictly as mentioned above. The easiest way to migrate is just to rename all references to `canCast`. Everything else remains the same.
 
 ```javascript
 // v2
