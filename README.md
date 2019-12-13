@@ -55,6 +55,19 @@ Checks if the value is strictly valid. Calls `canCast(value)` and `isValidType(v
 ### enum_
 The `enum_` function is alias to `enum` because of typescript.
 
+## Model
+`Model` is base class that supports decorators for typings of its properties.
+```javascript
+import Type, { Model } from 'runtime-type';
+
+class Test extends Model {
+
+	@Model.type(Type.string)
+	test = 'test';
+}
+```
+The `test` property will be cast to string on set of the value in the property.
+
 ## Migrating to v3
 The `isValid` method now validates the value strictly as mentioned above. The easiest way to migrate is just to rename all references to `canCast`. Everything else remains the same.
 

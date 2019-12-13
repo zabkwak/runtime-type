@@ -14,6 +14,8 @@ import Shape from './types/shape';
 
 import Type from './types/base';
 
+import Model from './model';
+
 export default {
     integer: new Integer(),
     float: new Float(),
@@ -67,5 +69,9 @@ export default {
         // TODO instanceOf?
         throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
     },
-    Type,
+	Type,
+};
+
+export {
+	Model,
 };

@@ -195,7 +195,14 @@ declare module 'runtime-type' {
         public cast(value: any): string;
         public getDefaultValue(): string;
         protected _getTypeOf(): string;
-    }
+	}
+	
+	export class Model {
+
+		public static type: (type: BaseType, isNullable?: boolean) => PropertyDecorator;
+
+		public static create<T = any, U extends Model = Model>(data: T): U;
+	}
 
     namespace RuntimeType {
         export const integer: Integer;
