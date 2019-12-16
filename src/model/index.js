@@ -6,8 +6,12 @@ export default class Model {
 
 	static create(data) {
 		const instance = new this();
-		Object.keys(data).forEach((key) => instance[key] = data[key]);
+		instance.setData(data);
 		return instance;
+	}
+
+	setData(data) {
+		Object.keys(data).forEach((key) => this[key] = data[key]);
 	}
 
 	toJSON() {

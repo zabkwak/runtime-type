@@ -202,6 +202,8 @@ declare module 'runtime-type' {
 		public static type: (type: BaseType, isNullable?: boolean) => PropertyDecorator;
 
 		public static create<T = any, U extends Model = Model>(data: T): U;
+
+		public setData<T = any>(data: T): void;
 	}
 
     namespace RuntimeType {

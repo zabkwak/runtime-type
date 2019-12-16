@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.3.0
+### Features
+- Method setData for the Model.
+
 ## 3.2.0
 ### Features
 - Model with type decorator.
