@@ -7,6 +7,8 @@ export default class Shape extends Base {
 
     _shape = null;
 
+    _required = [];
+
     constructor(shape) {
         super();
         Object.keys(shape).forEach((key) => {
@@ -14,6 +16,12 @@ export default class Shape extends Base {
             if (!(type instanceof Type)) {
                 throw new Error(`The type ${type} must be an instance of Type.`, 'unsupported_operation');
             }
+            if (key.indexOf('?') === key.length - 1) {
+                delete shape[key];
+                shape[key.substr(0, key.length - 1)] = type;
+                return;
+            }
+            this._required.push(key);
         })
         this._shape = shape;
     }
@@ -23,7 +31,10 @@ export default class Shape extends Base {
         Object.keys(this._shape).forEach((key) => {
             const type = this._shape[key];
             if (value[key] === undefined) {
-                throw new Error(`Missing key '${key}' in the shape.`, 'unsupported_operation');
+                if (this._required.includes(key)) {
+                    throw new Error(`Missing key '${key}' in the shape.`, 'unsupported_operation');
+                }
+                return;
             }
             try {
                 o[key] = type.cast(value[key]);
@@ -44,7 +55,10 @@ export default class Shape extends Base {
 
     toString() {
         const o = {};
-        Object.keys(this._shape).forEach((key) => o[key] = this._shape[key].toString());
+        Object.keys(this._shape).forEach((key) => {
+            const k = this._required.includes(key) ? key : `${key}?`;
+            o[k] = this._shape[key].toString();
+        });
         return `shape(${JSON.stringify(o)})`;
     }
 

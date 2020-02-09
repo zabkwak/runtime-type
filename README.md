@@ -49,7 +49,7 @@ Checks if the value is strictly valid. Calls `canCast(value)` and `isValidType(v
 | instanceOf(cls: Class)                          | Equivivalent of the `instanceof`.                                                                                                               |         | value instanceOf Class    |
 | integer                                         | The value is parsed by `parseInt` function in `cast` method. `isValidType` method checks if the value is not decimal.                           | number  | parseInt(value)           |
 | object                                          | The value is validated with `typeof value === 'object'`.                                                                                        | object  | typeof value === 'object' |
-| shape                                           | The value's keys are validated with the specified types.                                                                                        | object  |                           |
+| shape                                           | The value's keys are validated with the specified types. The key with `?` defines optional key.                                                                                       | object  |                           |
 | string(shape: Object.<string, Type>)            | The value is converted to string with `toString` method.                                                                                        | string  | value.toString()          |
 
 ### enum_

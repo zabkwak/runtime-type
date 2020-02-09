@@ -317,7 +317,7 @@ describe('Shape type', () => {
     it('checks the any types in shape', () => {
         const s = Type.shape({
             integer: Type.any,
-            string: Type.string
+            string: Type.string,
         });
         expect(s).to.be.an.instanceOf(BaseType);
         expect(s.canCast({
@@ -328,6 +328,28 @@ describe('Shape type', () => {
             integer: 0,
             string: 'string',
         })).to.be.true;
+    });
+
+    it('checks the shape with defined optional keys', () => {
+        const s = Type.shape({
+            integer: Type.integer,
+            'string?': Type.string,
+        });
+        expect(s).to.be.an.instanceOf(BaseType);
+        expect(s.canCast({
+            integer: 1,
+            string: 'string',
+        })).to.be.true;
+        expect(s.canCast({
+            integer: 1,
+        })).to.be.true;
+        expect(s.canCast({
+            integer: 'string',
+            string: 'string',
+        })).to.be.false;
+        expect(s.canCast({
+            string: 'string',
+        })).to.be.false;
     });
 });
 
@@ -344,6 +366,7 @@ describe('toString()', () => {
         expect(Type.integer.toString()).to.be.equal('integer');
         expect(Type.object.toString()).to.be.equal('object');
         expect(Type.shape({ test: Type.integer }).toString()).to.be.equal('shape({"test":"integer"})');
+        expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).toString()).to.be.equal('shape({"test":"integer","optional?":"string"})');
         expect(Type.string.toString()).to.be.equal('string');
     });
 });
@@ -372,6 +395,7 @@ describe('fromString(type)', () => {
 
         expect(Type.fromString('shape({"test":"integer"})').toString()).to.be.equal(Type.shape({ test: Type.integer }).toString());
         expect(Type.fromString('shape({"test":"integer","string":"string"})').toString()).to.be.equal(Type.shape({ test: Type.integer, string: Type.string }).toString());
+        expect(Type.fromString('shape({"test":"integer","string?":"string"})').toString()).to.be.equal(Type.shape({ test: Type.integer, 'string?': Type.string }).toString());
 
         expect(() => Type.fromString('test')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
         expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');

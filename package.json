@@ -3,7 +3,7 @@
   "version": "3.4.0",
   "description": "Module for casting to types at runtime.",
   "main": "index.js",
-  "types": "./dist/__types__/index.d.ts",
+  "types": "./dist/index.d.ts",
   "scripts": {
     "test": "./node_modules/.bin/mocha ./__tests__ --recursive --require @babel/register --exit",
     "create_index": "run-script-os",
