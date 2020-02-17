@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## 3.5.0
+### Updates
+- Supporting decorators for typescript.
+- Mapping of types in the model.
+
+## 3.4.0
+### Features
+- Optional fields in shapes.
+
 ## 3.3.0
 ### Features
 - Method setData for the Model.

@@ -69,7 +69,8 @@ export default {
         // TODO instanceOf?
         throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
     },
-	Type,
+    Type,
+    Model,
 };
 
 export {
