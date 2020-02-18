@@ -2,7 +2,7 @@
 
 ## 3.5.1
 ### Updates
-- Updated dependencies.
+- Updated type definition.
 
 ## 3.5.0
 ### Updates
