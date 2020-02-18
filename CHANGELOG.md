@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.1
+### Updates
+- Updated dependencies.
+
 ## 3.5.0
 ### Updates
 - Supporting decorators for typescript.

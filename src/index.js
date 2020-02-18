@@ -74,5 +74,6 @@ export default {
 };
 
 export {
-	Model,
+    Model,
+    Type as BaseType,
 };

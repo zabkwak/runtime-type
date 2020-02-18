@@ -1,4 +1,4 @@
-declare abstract class BaseType {
+export abstract class BaseType {
     /**
      * Safely casts the value to the type. If the cast fails, the default value of the Type is returned.
      * @param value Value to cast.
