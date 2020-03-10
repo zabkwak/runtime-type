@@ -36,7 +36,7 @@ export default {
         if (['integer', 'float', 'string', 'date', 'boolean', 'object', 'any'].includes(type)) {
             return this[type];
         }
-        const arrayMatch = type.match(/(\w+)\[\]/);
+        const arrayMatch = type.match(/(.+)\[\]/);
         if (arrayMatch) {
             try {
                 return this.arrayOf(this.fromString(arrayMatch[1]));
@@ -49,7 +49,7 @@ export default {
             const parts = enumMatch[1].split(',').map(a => a.replace(/'/g, '').trim());
             return this.enum(...parts);
         }
-        const shapeMatch = type.match(/shape\((.+)\)/);
+		const shapeMatch = type.match(/shape\((.+)\)/);
         if (shapeMatch) {
             let shape;
             try {

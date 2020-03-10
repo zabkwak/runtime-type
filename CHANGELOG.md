@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.4
+### Fixes
+- Recognition of arrayOf shape.
+
 ## 3.5.3
 ### Updates
 - Exported Enum class.
