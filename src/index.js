@@ -75,5 +75,15 @@ export default {
 
 export {
     Model,
-    Type as BaseType,
+	Type as BaseType,
+	Integer,
+	Float,
+	String,
+	DateType,
+	BooleanType,
+	ObjectType,
+	Any as AnyType,
+	InstanceOf,
+	ArrayOf,
+	Shape,
 };
