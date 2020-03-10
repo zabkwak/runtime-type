@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.3
+### Updates
+- Exported Enum class.
+
 ## 3.5.2
 ### Updates
 - Exported type classes.

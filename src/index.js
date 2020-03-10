@@ -82,6 +82,7 @@ export {
 	DateType,
 	BooleanType,
 	ObjectType,
+	Enum,
 	Any as AnyType,
 	InstanceOf,
 	ArrayOf,
