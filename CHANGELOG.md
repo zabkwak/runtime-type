@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.5.2
+### Updates
+- Exported type classes.
+
 ## 3.5.1
 ### Updates
 - Updated type definition.
