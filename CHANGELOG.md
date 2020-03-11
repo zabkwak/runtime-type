@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.6.1
+### Updates
+- Updated type definition.
+
 ## 3.6.0
 ### Features
 - Method for getting type for typescript.
