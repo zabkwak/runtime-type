@@ -22,7 +22,13 @@ export abstract class BaseType {
      * @param value Value to cast.
      * @abstract
      */
-    public abstract cast(value: any): any;
+	public abstract cast(value: any): any;
+	
+	/**
+	 * Gets the TypeScript type of the Type.
+	 * @abstract
+	 */
+	public abstract getTSType(): string;
 
     /**
      * Gets the name of the type.

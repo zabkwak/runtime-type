@@ -9,7 +9,11 @@ export default class String extends Base {
             return value.toString();
         }
         return null;
-    }
+	}
+	
+	getTSType() {
+		return 'string';
+	}
 
     _getTypeOf() {
         return 'string';

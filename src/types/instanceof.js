@@ -23,7 +23,11 @@ export default class InstanceOf extends Base {
 
     isValidType() {
         return true;
-    }
+	}
+	
+	getTSType() {
+		return this._class.name;
+	}
 
     _getTypeOf() {
         return null;

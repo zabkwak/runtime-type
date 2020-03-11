@@ -31,10 +31,13 @@ Tries to cast the value. If the cast fails the defaultValue is returned.
 Checks if the value is valid. It calls the `cast` method and if the cast is successful `true` is returned. If the cast throw an error `false` is returned. 
 
 ### isValidType(value)
-Chekcs the value using `typeof` defined in the inherited type.
+Checks the value using `typeof` defined in the inherited type.
 
 ### isValid(value)
 Checks if the value is strictly valid. Calls `canCast(value)` and `isValidType(value)`.
+
+### getTSType()
+Returns the TypeScript type.
 
 ## Types
 

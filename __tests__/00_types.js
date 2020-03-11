@@ -426,3 +426,21 @@ describe('Instance comparing', () => {
 		expect(Type.enum('test', 'baf', 'lek').compare(Type.enum('test', 'lek', 'baf'))).to.be.false;
 	});
 });
+
+describe('TS typings', () => {
+
+	it('checks the TS types', () => {
+		expect(Type.integer.getTSType()).to.be.equal('number');
+		expect(Type.float.getTSType()).to.be.equal('number');
+		expect(Type.string.getTSType()).to.be.equal('string');
+		expect(Type.date.getTSType()).to.be.equal('Date');
+		expect(Type.boolean.getTSType()).to.be.equal('boolean');
+		expect(Type.object.getTSType()).to.be.equal('any');
+		expect(Type.any.getTSType()).to.be.equal('any');
+
+		expect(Type.arrayOf(Type.string).getTSType()).to.be.equal('string[]');
+		expect(Type.enum_('baf', 'lek').getTSType()).to.be.equal('\'baf\' | \'lek\'');
+
+		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');
+	});
+});

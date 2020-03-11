@@ -13,7 +13,11 @@ export default class ObjectType extends Base {
 
     toString() {
         return 'object';
-    }
+	}
+	
+	getTSType() {
+		return 'any';
+	}
 
     _getTypeOf() {
         return 'object';

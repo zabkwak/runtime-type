@@ -60,7 +60,15 @@ export default class Shape extends Base {
             o[k] = this._shape[key].toString();
         });
         return `shape(${JSON.stringify(o)})`;
-    }
+	}
+	
+	getTSType() {
+		const a = Object.keys(this._shape).map((key) => {
+            const k = this._required.includes(key) ? key : `${key}?`;
+			return `${k}: ${this._shape[key].getTSType()}`;
+		});
+		return `{ ${a.join(', ')} }`;
+	}
 
     _getTypeOf() {
         return 'object';

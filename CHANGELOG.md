@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.6.0
+### Features
+- Method for getting type for typescript.
+
 ## 3.5.4
 ### Fixes
 - Recognition of arrayOf shape.

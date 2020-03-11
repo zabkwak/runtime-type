@@ -22,7 +22,11 @@ export default class Numeric extends Base {
 
     getDefaultValue() {
         return 0;
-    }
+	}
+	
+	getTSType() {
+		return 'number';
+	}
 
     _getTypeOf() {
         return 'number';

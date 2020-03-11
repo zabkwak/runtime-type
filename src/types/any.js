@@ -8,7 +8,11 @@ export default class Any extends Base {
 
     isValidType(value) {
         return true;
-    }
+	}
+	
+	getTSType() {
+		return 'any';
+	}
 
     _getTypeOf() {
         return null;

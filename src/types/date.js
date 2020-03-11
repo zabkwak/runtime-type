@@ -21,7 +21,11 @@ export default class DateType extends Base {
 
     toString() {
         return 'date';
-    }
+	}
+	
+	getTSType() {
+		return 'Date';
+	}
 
     _getTypeOf() {
         return 'object';

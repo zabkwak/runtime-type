@@ -28,7 +28,11 @@ export default class Type {
 
     getJSDOCType() {
         return 'any';
-    }
+	}
+	
+	getTSType() {
+        throw new Error(`Method ${this.constructor.name}.getTSType() not implemented`, 'not_implemented');
+	}
 
     isValid(value) {
         return this.canCast(value) && this.isValidType(value);
