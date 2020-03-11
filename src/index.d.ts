@@ -28,7 +28,7 @@ export abstract class BaseType {
 	 * Gets the TypeScript type of the Type.
 	 * @abstract
 	 */
-	public abstract getTSType(): string;
+	public getTSType(): string;
 
     /**
      * Gets the name of the type.
