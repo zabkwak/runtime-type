@@ -9,6 +9,8 @@ export default class Shape extends Base {
 
     _required = [];
 
+    _dynamic = [];
+
     constructor(shape) {
         super();
         Object.keys(shape).forEach((key) => {
@@ -21,6 +23,9 @@ export default class Shape extends Base {
                 shape[key.substr(0, key.length - 1)] = type;
                 return;
             }
+            if (/^\[\w+\]$/.test(key)) {
+                this._dynamic.push(key);
+            }
             this._required.push(key);
         })
         this._shape = shape;
@@ -29,6 +34,9 @@ export default class Shape extends Base {
     cast(value) {
         const o = {};
         Object.keys(this._shape).forEach((key) => {
+            if (this._dynamic.includes(key)) {
+                return;
+            }
             const type = this._shape[key];
             if (value[key] === undefined) {
                 if (this._required.includes(key)) {
@@ -45,11 +53,33 @@ export default class Shape extends Base {
                 throw e;
             }
         });
+        const usedDynamicKeys = [];
         Object.keys(value).forEach((key) => {
             if (this._shape[key] === undefined) {
+                this._dynamic.filter((dynamicKey) => !usedDynamicKeys.includes(dynamicKey)).forEach((dynamicKey) => {
+                    if (o[key]) {
+                        return;
+                    }
+                    const type = this._shape[dynamicKey];
+                    if (type.canCast(value[key])) {
+                        o[key] = type.cast(value[key]);
+                        usedDynamicKeys.push(dynamicKey);
+                    }
+                });
+                if (o[key]) {
+                    return;
+                }
                 throw new Error(`The key '${key}' is not defined in the shape.`, 'unsupported_operation');
             }
         });
+        if (usedDynamicKeys.length !== this._dynamic.length) {
+            this._dynamic.forEach((key) => {
+                if (usedDynamicKeys.includes(key)) {
+                    return;
+                }
+                throw new Error(`Missing key '${key}' in the shape.`, 'unsupported_operation');
+            });
+        }
         return o;
     }
 

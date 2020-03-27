@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.7.0
+### Features
+- Dynamic fields in shapes.
+
 ## 3.6.1
 ### Updates
 - Updated type definition.

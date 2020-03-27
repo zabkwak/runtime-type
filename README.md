@@ -52,11 +52,33 @@ Returns the TypeScript type.
 | instanceOf(cls: Class)                          | Equivivalent of the `instanceof`.                                                                                                               |         | value instanceOf Class    |
 | integer                                         | The value is parsed by `parseInt` function in `cast` method. `isValidType` method checks if the value is not decimal.                           | number  | parseInt(value)           |
 | object                                          | The value is validated with `typeof value === 'object'`.                                                                                        | object  | typeof value === 'object' |
-| shape                                           | The value's keys are validated with the specified types. The key with `?` as last character defines optional key.                                                                                       | object  |                           |
+| shape                                           | The value's keys are validated with the specified types. The key with `?` as last character defines optional key. The key in `[]` defines dynamic field.                                                                                      | object  |                           |
 | string(shape: Object.<string, Type>)            | The value is converted to string with `toString` method.                                                                                        | string  | value.toString()          |
 
 ### enum_
 The `enum_` function is alias to `enum` because of typescript.
+
+### Shapes
+#### Optional fields
+The shapes can have optional fields defined. 
+```javascript
+import Type from 'runtime-type';
+
+const shape = Type.shape({
+	integer: Type.integer,
+	'optional?': Type.string,
+});
+```
+#### Dynamic keys
+The shapes can have dynamic keys defined. The validated shape can use keys that are not defined in the shape. The dynamic key is checked only once. Then it throws an error if there are another fields in the shape.
+```javascript
+import Type from 'runtime-type';
+
+const shape = Type.shape({
+	integer: Type.integer,
+	'[dynamic]': Type.string,
+});
+```
 
 ## Model
 `Model` is base class that supports decorators for typings of its properties.

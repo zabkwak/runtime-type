@@ -351,6 +351,43 @@ describe('Shape type', () => {
 			string: 'string',
 		})).to.be.false;
 	});
+
+	it('checks the shape with defined dynamic key', () => {
+		const s = Type.shape({
+			number: Type.integer,
+			'[dynamic]': Type.integer,
+		});
+		expect(s).to.be.an.instanceOf(BaseType);
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 'string',
+		})).to.be.false;
+		expect(s.canCast({
+			number: 1,
+			string: 'string',
+		})).to.be.false;		
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			string: 'string',
+		})).to.be.false;
+		expect(s.canCast({
+			number: 1,
+			string: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			string: 1,
+			integer: 1,
+		})).to.be.false;
+		expect(s.canCast({
+			number: 1,
+		})).to.be.false;
+	});
 });
 
 describe('toString()', () => {
