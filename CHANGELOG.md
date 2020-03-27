@@ -3,6 +3,7 @@
 ## 3.7.0
 ### Features
 - Dynamic fields in shapes.
+- JSON can be converted to Shape type.
 
 ## 3.6.1
 ### Updates

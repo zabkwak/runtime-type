@@ -433,6 +433,7 @@ describe('fromString(type)', () => {
 		expect(Type.fromString('shape({"test":"integer"})').toString()).to.be.equal(Type.shape({ test: Type.integer }).toString());
 		expect(Type.fromString('shape({"test":"integer","string":"string"})').toString()).to.be.equal(Type.shape({ test: Type.integer, string: Type.string }).toString());
 		expect(Type.fromString('shape({"test":"integer","string?":"string"})').toString()).to.be.equal(Type.shape({ test: Type.integer, 'string?': Type.string }).toString());
+		expect(Type.fromString('{"test":"integer","string?":"string"}').toString()).to.be.equal(Type.shape({ test: Type.integer, 'string?': Type.string }).toString());
 
 		expect(Type.fromString('shape({"test":"integer"})[]').toString()).to.be.equal(Type.arrayOf(Type.shape({ test: Type.integer })).toString());
 

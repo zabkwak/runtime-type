@@ -32,7 +32,6 @@ export default {
 
     isValidType: (type) => type instanceof Type,
     fromString(type) {
-        // TODO JSON as a shape?
         if (['integer', 'float', 'string', 'date', 'boolean', 'object', 'any'].includes(type)) {
             return this[type];
         }
@@ -49,7 +48,7 @@ export default {
             const parts = enumMatch[1].split(',').map(a => a.replace(/'/g, '').trim());
             return this.enum(...parts);
         }
-		const shapeMatch = type.match(/shape\((.+)\)/);
+        const shapeMatch = type.match(/shape\((.+)\)/);
         if (shapeMatch) {
             let shape;
             try {
@@ -66,6 +65,21 @@ export default {
                 throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
             }
         }
+        try {
+            const json = JSON.parse(type);
+            try {
+                Object.keys(json).forEach((key) => {
+                    json[key] = this.fromString(json[key]);
+                });
+                return this.shape(json);
+            } catch (e) {
+                throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
+            }
+        } catch (e) {
+            if (e.code === 'ERR_UNSUPPORTED_OPERATION') {
+                throw e;
+            }
+        }
         // TODO instanceOf?
         throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
     },
@@ -75,16 +89,16 @@ export default {
 
 export {
     Model,
-	Type as BaseType,
-	Integer,
-	Float,
-	String,
-	DateType,
-	BooleanType,
-	ObjectType,
-	Enum,
-	Any as AnyType,
-	InstanceOf,
-	ArrayOf,
-	Shape,
+    Type as BaseType,
+    Integer,
+    Float,
+    String,
+    DateType,
+    BooleanType,
+    ObjectType,
+    Enum,
+    Any as AnyType,
+    InstanceOf,
+    ArrayOf,
+    Shape,
 };
