@@ -38,6 +38,10 @@ export default class Enum extends Base {
 		return this.defaultValue;
 	}
 
+	getName() {
+		return 'Enum';
+	}
+
 	toString() {
 		return `enum(${this.values.map(item => `'${item}'`).join(',')})`;
 	}

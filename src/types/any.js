@@ -14,6 +14,10 @@ export default class Any extends Base {
 		return 'any';
 	}
 
+	getName() {
+		return 'Any';
+	}
+
     _getTypeOf() {
         return null;
     }

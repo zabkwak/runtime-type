@@ -15,7 +15,11 @@ export default class BooleanType extends Base {
 
     getDefaultValue() {
         return false;
-    }
+	}
+	
+	getName() {
+		return 'BooleanType';
+	}
 
     toString() {
         return 'boolean';

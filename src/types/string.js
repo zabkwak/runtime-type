@@ -10,6 +10,10 @@ export default class String extends Base {
         }
         return null;
 	}
+
+	getName() {
+		return 'String';
+	}
 	
 	getTSType() {
 		return 'string';

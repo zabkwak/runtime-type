@@ -34,7 +34,11 @@ export default class ArrayOf extends Base {
                 throw e;
             }
         });
-    }
+	}
+	
+	getName() {
+		return 'ArrayOf';
+	}
 
     toString() {
         return `${this._type}[]`;

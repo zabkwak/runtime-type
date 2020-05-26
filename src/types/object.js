@@ -9,7 +9,11 @@ export default class ObjectType extends Base {
             this._throwInvalidCast(value);
         }
         return value;
-    }
+	}
+	
+	getName() {
+		return 'ObjectType';
+	}
 
     toString() {
         return 'object';

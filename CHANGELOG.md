@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.7.1
+### Updates
+- Manually set names of types because of minification errors.
+
 ## 3.7.0
 ### Features
 - Dynamic fields in shapes.

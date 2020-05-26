@@ -15,7 +15,11 @@ export default class InstanceOf extends Base {
             throw new Error(`Value ${value} must be an instance of ${this._class.name}`, 'invalid_cast');
         }
         return value;
-    }
+	}
+	
+	getName() {
+		return 'InstanceOf';
+	}
 
     toString() {
         return this._class.name;

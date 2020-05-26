@@ -23,7 +23,7 @@ export default class Type {
     }
 
     getName() {
-        return this.constructor.name;
+        throw new Error(`Method ${this.constructor.name}.getName() not implemented`, 'not_implemented');
     }
 
     getJSDOCType() {
@@ -48,7 +48,7 @@ export default class Type {
     }
 
     toString() {
-        return this.constructor.name.toLowerCase();
+		return this.getName().toLowerCase();
     }
 
     compare(type) {

@@ -17,7 +17,11 @@ export default class DateType extends Base {
 
     getDefaultValue() {
         return new Date();
-    }
+	}
+	
+	getName() {
+		return 'DateType';
+	}
 
     toString() {
         return 'date';

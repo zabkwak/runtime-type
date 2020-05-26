@@ -81,7 +81,11 @@ export default class Shape extends Base {
             });
         }
         return o;
-    }
+	}
+	
+	getName() {
+		return 'Shape';
+	}
 
     toString() {
         const o = {};
