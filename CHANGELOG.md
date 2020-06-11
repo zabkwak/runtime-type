@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.7.2
+### Fixes
+- String parsing with nested shapes.
+
 ## 3.7.1
 ### Updates
 - Manually set names of types because of minification errors.

@@ -437,6 +437,17 @@ describe('fromString(type)', () => {
 
 		expect(Type.fromString('shape({"test":"integer"})[]').toString()).to.be.equal(Type.arrayOf(Type.shape({ test: Type.integer })).toString());
 
+		expect(Type.fromString('shape({"tracking_id":"string","events?":"shape({\\"key\\":\\"string\\",\\"event\\":\\"string\\",\\"event_category\\":\\"string\\",\\"event_label\\":\\"string\\",\\"value?\\":\\"integer\\"})[]"})').toString()).to.be.equal(Type.shape({
+			tracking_id: Type.string,
+			'events?': Type.arrayOf(Type.shape({
+				key: Type.string,
+				event: Type.string,
+				event_category: Type.string,
+				event_label: Type.string,
+				'value?': Type.integer,
+			})),
+		}).toString());
+
 
 		expect(() => Type.fromString('test')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
 		expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
