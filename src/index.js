@@ -43,12 +43,12 @@ export default {
 				throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation', { error: e });
 			}
 		}
-		const enumMatch = type.match(/enum\((.+)\)$/);
+		const enumMatch = type.match(/^enum\((.+)\)$/);
 		if (enumMatch) {
 			const parts = enumMatch[1].split(',').map(a => a.replace(/'/g, '').trim());
 			return this.enum(...parts);
 		}
-		const shapeMatch = type.match(/shape\((.+)\)$/);
+		const shapeMatch = type.match(/^shape\((.+)\)$/);
 		if (shapeMatch) {
 			let shape;
 			try {

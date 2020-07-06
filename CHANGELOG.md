@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.7.3
+### Fixes 
+- String parsing with nested enums.
+
 ## 3.7.2
 ### Fixes
 - String parsing with nested shapes.

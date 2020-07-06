@@ -447,7 +447,13 @@ describe('fromString(type)', () => {
 				'value?': Type.integer,
 			})),
 		}).toString());
-
+		expect(Type.fromString('shape({\"content\":\"string\",\"filename\":\"string\",\"type?\":\"enum(\'application/json\',\'text/html\')\"})[]').toString()).to.be.equal(Type.arrayOf(
+			Type.shape({
+				content: Type.string,
+				filename: Type.string,
+				'type?': Type.enum_('application/json', 'text/html'),
+			}),
+		).toString());
 
 		expect(() => Type.fromString('test')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
 		expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
