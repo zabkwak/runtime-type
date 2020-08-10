@@ -369,7 +369,7 @@ describe('Shape type', () => {
 		expect(s.canCast({
 			number: 1,
 			string: 'string',
-		})).to.be.false;		
+		})).to.be.false;
 		expect(s.canCast({
 			number: 1,
 			integer: 1,
@@ -496,7 +496,8 @@ describe('TS typings', () => {
 		expect(Type.arrayOf(Type.string).getTSType()).to.be.equal('string[]');
 		expect(Type.enum_('baf', 'lek').getTSType()).to.be.equal('\'baf\' | \'lek\'');
 
-		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');		
-		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType(true)).to.be.equal('{\ntest: number;\noptional?: string;\n}');
+		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');
+		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}');
+		expect(Type.shape({ test: Type.shape({ nested: Type.string }) }).getTSType(true)).to.be.equal('{\n\ttest: {\n\t\tnested: string;\n\t};\n}');
 	});
 });

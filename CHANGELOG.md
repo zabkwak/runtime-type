@@ -1,4 +1,9 @@
 # CHANGELOG
+
+## 3.8.1
+### Fixes
+- Nested shapes TS type formatting.
+
 ## 3.8.0
 ### Features
 - Formatting of the TS types.

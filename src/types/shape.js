@@ -96,10 +96,13 @@ export default class Shape extends Base {
         return `shape(${JSON.stringify(o)})`;
 	}
 	
-	getTSType(format = false) {
+	getTSType(format = false, level = 0) {
 		const a = Object.keys(this._shape).map((key) => {
-            const k = this._required.includes(key) ? key : `${key}?`;
-			return `${k}: ${this._shape[key].getTSType()}`;
+			const k = this._required.includes(key) ? key : `${key}?`;
+			if (this._shape[key] instanceof Shape && format) {
+				return `${k}: ${this._shape[key].getTSType(format, level + 1)}`;
+			}
+			return `${k}: ${this._shape[key].getTSType(format)}`;
 		});
 		if (!a.length) {
 			return '{}';
@@ -107,7 +110,8 @@ export default class Shape extends Base {
 		if (!format) {
 			return `{ ${a.join(', ')} }`;
 		}
-		return `{\n${a.join(';\n')};\n}`;
+		const tabs = new Array(level + 1).fill('\t').join('');
+		return `{\n${a.map((v) => `${tabs}${v};`).join('\n')}\n${tabs.substr(1)}}`;
 	}
 
     _getTypeOf() {
