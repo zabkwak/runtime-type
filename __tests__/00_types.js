@@ -496,6 +496,7 @@ describe('TS typings', () => {
 		expect(Type.arrayOf(Type.string).getTSType()).to.be.equal('string[]');
 		expect(Type.enum_('baf', 'lek').getTSType()).to.be.equal('\'baf\' | \'lek\'');
 
-		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');
+		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');		
+		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType(true)).to.be.equal('{\ntest: number;\noptional?: string;\n}');
 	});
 });

@@ -30,6 +30,13 @@ export abstract class BaseType {
 	 */
 	public getTSType(): string;
 
+	/**
+	 * Gets the TypeScript type of the Type.
+	 * @param format Indicates if the output should be formatted.
+	 * @abstract
+	 */
+	public getTSType(format: boolean): string;
+
     /**
      * Gets the name of the type.
      */

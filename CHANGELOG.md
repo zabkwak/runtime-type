@@ -1,4 +1,7 @@
 # CHANGELOG
+## 3.8.0
+### Features
+- Formatting of the TS types.
 
 ## 3.7.3
 ### Fixes 

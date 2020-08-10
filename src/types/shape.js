@@ -96,12 +96,18 @@ export default class Shape extends Base {
         return `shape(${JSON.stringify(o)})`;
 	}
 	
-	getTSType() {
+	getTSType(format = false) {
 		const a = Object.keys(this._shape).map((key) => {
             const k = this._required.includes(key) ? key : `${key}?`;
 			return `${k}: ${this._shape[key].getTSType()}`;
 		});
-		return `{ ${a.join(', ')} }`;
+		if (!a.length) {
+			return '{}';
+		}
+		if (!format) {
+			return `{ ${a.join(', ')} }`;
+		}
+		return `{\n${a.join(';\n')};\n}`;
 	}
 
     _getTypeOf() {
