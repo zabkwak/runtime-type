@@ -499,5 +499,7 @@ describe('TS typings', () => {
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}');
 		expect(Type.shape({ test: Type.shape({ nested: Type.string }) }).getTSType(true)).to.be.equal('{\n\ttest: {\n\t\tnested: string;\n\t};\n}');
+
+		expect(Type.arrayOf(Type.shape({ test: Type.integer, 'optional?': Type.string })).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}[]');
 	});
 });

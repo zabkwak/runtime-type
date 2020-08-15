@@ -44,8 +44,8 @@ export default class ArrayOf extends Base {
         return `${this._type}[]`;
 	}
 	
-	getTSType() {
-		return `${this._type.getTSType()}[]`;
+	getTSType(format = false) {
+		return `${this._type.getTSType(format)}[]`;
 	}
 
     _getTypeOf() {

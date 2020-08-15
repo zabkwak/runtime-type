@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.8.2
+### Fixes
+- Shape arrays TS type formatting.
+
 ## 3.8.1
 ### Fixes
 - Nested shapes TS type formatting.
