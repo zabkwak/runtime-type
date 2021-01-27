@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 3.8.3
+### Fixes
+- Decorators for TS.
+
 ## 3.8.2
 ### Fixes
 - Shape arrays TS type formatting.

@@ -16,7 +16,7 @@ export default (type, isNullable = false) => {
 		target.__properties__.push(property);
 		target.__types__[property] = type;
 		let v;
-		if (descriptor.initializer) {
+		if (descriptor && descriptor.initializer) {
 			v = cast(type, descriptor.initializer(), isNullable);
 		}
 		return {
