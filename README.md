@@ -71,14 +71,19 @@ const shape = Type.shape({
 });
 ```
 #### Dynamic keys
-The shapes can have dynamic keys defined. The validated shape can use keys that are not defined in the shape. The dynamic key is checked only once. Then it throws an error if there are another fields in the shape.
+The shapes can have dynamic keys defined. The validated shape can use keys that are not defined in the shape. The dynamic key is checked indefinitely.
 ```javascript
 import Type from 'runtime-type';
 
 const shape = Type.shape({
 	integer: Type.integer,
 	'[dynamic]': Type.string,
-});
+}); // The shape must contain `integer` key and at least one of the `string` keys
+
+const shape2 = Type.shape({
+	integer: Type.integer,
+	'[dynamic]?': Type.string,
+}); // The shape must contain `integer` key and none or indefinitely `string` keys
 ```
 
 ### Union

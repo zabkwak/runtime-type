@@ -1,8 +1,10 @@
 # CHANGELOG
 
-# 3.9.0
+# 4.0.0
 ### Features
 - `Union` type.
+### Breaking changes
+- Dynamic keys in `Shape` can be set indefinitely.
 
 ## 3.8.3
 ### Fixes

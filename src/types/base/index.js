@@ -43,6 +43,9 @@ export default class Type {
             this.cast(value);
             return true;
         } catch (e) {
+            if (!e.code) {
+                throw e;
+            }
             return false;
         }
     }

@@ -356,6 +356,7 @@ describe('Shape type', () => {
 		const s = Type.shape({
 			number: Type.integer,
 			'[dynamic]': Type.integer,
+			'[optionalDynamic]?': Type.date,
 		});
 		expect(s).to.be.an.instanceOf(BaseType);
 		expect(s.canCast({
@@ -383,9 +384,19 @@ describe('Shape type', () => {
 			number: 1,
 			string: 1,
 			integer: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
 		})).to.be.false;
 		expect(s.canCast({
 			number: 1,
+			integer: 1,
+			date: new Date(),
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			date: 'date',
 		})).to.be.false;
 	});
 });
@@ -450,6 +461,11 @@ describe('toString()', () => {
 		expect(Type.object.toString()).to.be.equal('object');
 		expect(Type.shape({ test: Type.integer }).toString()).to.be.equal('shape({"test":"integer"})');
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).toString()).to.be.equal('shape({"test":"integer","optional?":"string"})');
+		expect(Type.shape({
+			test: Type.integer,
+			'[dynamic]': Type.integer,
+			'[dynamicOptional]?': Type.string,
+		}).toString()).to.be.equal('shape({"test":"integer","[dynamic]":"integer","[dynamicOptional]?":"string"})');
 		expect(Type.string.toString()).to.be.equal('string');
 		expect(Type.union(Type.string, Type.integer).toString()).to.be.equal('union(string,integer)');
 	});
@@ -549,6 +565,7 @@ describe('TS typings', () => {
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType()).to.be.equal('{ test: number, optional?: string }');
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}');
 		expect(Type.shape({ test: Type.shape({ nested: Type.string }) }).getTSType(true)).to.be.equal('{\n\ttest: {\n\t\tnested: string;\n\t};\n}');
+		expect(Type.shape({ test: Type.integer, '[dynamic]': Type.string }).getTSType(true)).to.be.equal('{\n\ttest: number;\n\t[dynamic: string]: string;\n}');
 
 		expect(Type.arrayOf(Type.shape({ test: Type.integer, 'optional?': Type.string })).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}[]');
 
