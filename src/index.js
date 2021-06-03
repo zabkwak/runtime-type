@@ -11,6 +11,7 @@ import Any from './types/any';
 import InstanceOf from './types/instanceof';
 import ArrayOf from './types/arrayof';
 import Shape from './types/shape';
+import Union from './types/union';
 
 import Type from './types/base';
 
@@ -29,6 +30,7 @@ export default {
 	shape: (shape) => new Shape(shape),
 	enum: (defaultValue, ...values) => new Enum(defaultValue, ...values),
 	enum_: (defaultValue, ...values) => new Enum(defaultValue, ...values),
+	union: (...types) => new Union(...types),
 
 	isValidType: (type) => type instanceof Type,
 	fromString(type) {
@@ -47,6 +49,11 @@ export default {
 		if (enumMatch) {
 			const parts = enumMatch[1].split(',').map(a => a.replace(/'/g, '').trim());
 			return this.enum(...parts);
+		}
+		const unionMatch = type.match(/^union\((.+)\)$/);
+		if (unionMatch) {
+			const types = unionMatch[1].split(',').map((t) => this.fromString(t));
+			return this.union(...types);
 		}
 		const shapeMatch = type.match(/^shape\((.+)\)$/);
 		if (shapeMatch) {

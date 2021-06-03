@@ -53,7 +53,8 @@ Returns the TypeScript type.
 | integer                                         | The value is parsed by `parseInt` function in `cast` method. `isValidType` method checks if the value is not decimal.                           | number  | parseInt(value)           |
 | object                                          | The value is validated with `typeof value === 'object'`.                                                                                        | object  | typeof value === 'object' |
 | shape                                           | The value's keys are validated with the specified types. The key with `?` as last character defines optional key. The key in `[]` defines dynamic field.                                                                                      | object  |                           |
-| string(shape: Object.<string, Type>)            | The value is converted to string with `toString` method.                                                                                        | string  | value.toString()          |
+| string           | The value is converted to string with `toString` method.                                                                                        | string  | value.toString()          |
+| union(...types: Type[])           | The value is converted to one of the types defined.                                                                                       |   |           |
 
 ### enum_
 The `enum_` function is alias to `enum` because of typescript.
@@ -79,6 +80,9 @@ const shape = Type.shape({
 	'[dynamic]': Type.string,
 });
 ```
+
+### Union
+Special type which checks the types in series and converts value to the valid one. If none of types are valid error is thrown.
 
 ## Model
 `Model` is base class that supports decorators for typings of its properties.

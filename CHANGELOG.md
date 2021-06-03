@@ -1,5 +1,9 @@
 # CHANGELOG
 
+# 3.9.0
+### Features
+- `Union` type.
+
 ## 3.8.3
 ### Fixes
 - Decorators for TS.

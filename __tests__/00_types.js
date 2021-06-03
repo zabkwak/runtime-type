@@ -189,10 +189,10 @@ describe('Object type', () => {
 		invalid.forEach(value => expect(Type.object.canCast(value)).to.be.false);
 	});
 
-    /*it('casts the values to the boolean', () => {
-        t.forEach(value => expect(Type.boolean.cast(value)).to.be.true);
-        f.forEach(value => expect(Type.boolean.cast(value)).to.be.false);
-    });*/
+	/*it('casts the values to the boolean', () => {
+		t.forEach(value => expect(Type.boolean.cast(value)).to.be.true);
+		f.forEach(value => expect(Type.boolean.cast(value)).to.be.false);
+	});*/
 });
 
 describe('Enum type', () => {
@@ -268,7 +268,7 @@ describe('Shape type', () => {
 
 	it('tries to create the shape from invalid type', () => {
 		expect(() => Type.shape({ something: 'something' })).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
-	})
+	});
 
 	it('checks if the shape contains all valid types', () => {
 		expect(Type.shape(shape).canCast({ integer: 5, string: 'string' })).to.be.true;
@@ -390,6 +390,52 @@ describe('Shape type', () => {
 	});
 });
 
+describe('Union type', () => {
+
+	it('creates the union', () => {
+		expect(Type.union(Type.string, Type.integer)).to.be.an.instanceOf(BaseType);
+	});
+
+	it('tries to create the union from invalid type', () => {
+		expect(() => Type.union('something')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
+	});
+
+	it('checks if the union can be cast', () => {
+		expect(Type.union(Type.string, Type.integer).canCast(5)).to.be.true;
+		expect(Type.union(Type.string, Type.integer).canCast('5')).to.be.true;
+		expect(Type.union(Type.string, Type.integer).canCast('string')).to.be.true;
+		expect(Type.union(Type.date, Type.integer).canCast({ integer: 'string', string: 'string' })).to.be.false;
+	});
+
+	it('tries to cast the type', () => {
+		expect(Type.union(Type.string, Type.integer).cast(5))
+			.to.deep.equal('5');
+		expect(Type.union(Type.integer, Type.string).cast('5')).
+			to.deep.equal(5);
+		expect(Type.union(Type.integer, Type.string).cast('string')).
+			to.deep.equal('string');
+		castError(Type.union(Type.date, Type.integer), { integer: 'string', string: 'string' });
+	});
+
+	it('tests the typeof', () => {
+		expect(Type.union(Type.string, Type.integer).isValidType(5)).to.be.true;
+		expect(Type.union(Type.string, Type.integer).isValidType('5')).to.be.true;
+		expect(Type.union(Type.string, Type.integer).isValidType(5.5)).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValidType(true)).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValidType([])).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValidType({})).to.be.false;
+	});
+
+	it('strictly tests the type', () => {
+		expect(Type.union(Type.string, Type.integer).isValid(5)).to.be.true;
+		expect(Type.union(Type.string, Type.integer).isValid('5')).to.be.true;
+		expect(Type.union(Type.string, Type.integer).isValid(5.5)).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValid(true)).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValid([])).to.be.false;
+		expect(Type.union(Type.string, Type.integer).isValid({})).to.be.false;
+	});
+});
+
 describe('toString()', () => {
 
 	it('calls toString method on every type', () => {
@@ -405,6 +451,7 @@ describe('toString()', () => {
 		expect(Type.shape({ test: Type.integer }).toString()).to.be.equal('shape({"test":"integer"})');
 		expect(Type.shape({ test: Type.integer, 'optional?': Type.string }).toString()).to.be.equal('shape({"test":"integer","optional?":"string"})');
 		expect(Type.string.toString()).to.be.equal('string');
+		expect(Type.union(Type.string, Type.integer).toString()).to.be.equal('union(string,integer)');
 	});
 });
 
@@ -455,6 +502,9 @@ describe('fromString(type)', () => {
 			}),
 		).toString());
 
+		expect(Type.fromString('union(string,integer)').toString())
+			.to.be.equal(Type.union(Type.string, Type.integer).toString());
+
 		expect(() => Type.fromString('test')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
 		expect(() => Type.fromString('test[]')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
 		expect(() => Type.fromString('shape({"test":"test"})')).to.throw(Error).that.has.property('code', 'ERR_UNSUPPORTED_OPERATION');
@@ -501,5 +551,7 @@ describe('TS typings', () => {
 		expect(Type.shape({ test: Type.shape({ nested: Type.string }) }).getTSType(true)).to.be.equal('{\n\ttest: {\n\t\tnested: string;\n\t};\n}');
 
 		expect(Type.arrayOf(Type.shape({ test: Type.integer, 'optional?': Type.string })).getTSType(true)).to.be.equal('{\n\ttest: number;\n\toptional?: string;\n}[]');
+
+		expect(Type.union(Type.string, Type.integer).getTSType()).to.be.equal('string | number');
 	});
 });
