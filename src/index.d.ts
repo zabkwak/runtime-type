@@ -240,7 +240,7 @@ declare namespace RuntimeType {
     export function arrayOf(type: Type): ArrayOf;
     export function shape(shape: { [key: string]: Type }): Shape;
     export function enum_(...values: string[]): Enum;
-    export function union(...types: Type): Union;
+    export function union(...types: Type[]): Union;
     export function isValidType(type: any): boolean;
     export function fromString<T extends Type = BaseType>(type: string): T;
     export type Type = BaseType;

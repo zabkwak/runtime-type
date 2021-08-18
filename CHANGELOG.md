@@ -1,6 +1,10 @@
 # CHANGELOG
 
-# 4.0.0
+## 4.0.1
+### Fixes
+- Type definition.
+
+## 4.0.0
 ### Features
 - `Union` type.
 ### Breaking changes

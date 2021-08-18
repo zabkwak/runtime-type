@@ -1,6 +1,6 @@
 {
   "name": "runtime-type",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Module for casting to types at runtime.",
   "main": "index.js",
   "types": "./dist/index.d.ts",
