@@ -64,7 +64,7 @@ export default class Shape extends Base {
                     const type = this._shape[dynamicKey];
                     if (type.canCast(value[key])) {
                         o[key] = type.cast(value[key]);
-                        if (this._isKeyRequired(dynamicKey)) {
+                        if (this._isKeyRequired(dynamicKey) && !usedDynamicKeys.includes(dynamicKey)) {
                             usedDynamicKeys.push(dynamicKey);
                         }
                     }

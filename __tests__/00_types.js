@@ -391,13 +391,56 @@ describe('Shape type', () => {
 		expect(s.canCast({
 			number: 1,
 			integer: 1,
+			integer_02: 2,
 			date: new Date(),
 		})).to.be.true;
 		expect(s.canCast({
 			number: 1,
 			integer: 1,
 			date: 'date',
-		})).to.be.false;
+		})).to.be.false;		
+	});
+
+	it('checks the dynamic shape', () => {
+		const s = Type.shape({
+			'[dynamic]': Type.any,
+		});
+		expect(s).to.be.an.instanceOf(BaseType);
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 'string',
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			string: 'string',
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			string: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			string: 1,
+			integer: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			date: new Date(),
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			date: 'date',
+		})).to.be.true;		
 	});
 });
 
