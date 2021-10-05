@@ -69,7 +69,7 @@ export default class Shape extends Base {
                         }
                     }
                 }
-                if (o[key]) {
+                if (o[key] !== undefined) {
                     return;
                 }
                 throw new Error(`The key '${key}' is not defined in the shape.`, 'unsupported_operation');

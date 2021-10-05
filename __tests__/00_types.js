@@ -440,7 +440,13 @@ describe('Shape type', () => {
 			number: 1,
 			integer: 1,
 			date: 'date',
-		})).to.be.true;		
+		})).to.be.true;
+		expect(s.canCast({
+			number: 1,
+			integer: 1,
+			date: 'date',
+			bool: false,
+		})).to.be.true;
 	});
 });
 
