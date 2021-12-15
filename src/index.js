@@ -37,10 +37,10 @@ export default {
 		if (['integer', 'float', 'string', 'date', 'boolean', 'object', 'any'].includes(type)) {
 			return this[type];
 		}
-		const arrayMatch = type.match(/(.+)\[\]$/);
-		if (arrayMatch) {
+		const arrayMarkIndex = type.lastIndexOf('[]');
+		if (arrayMarkIndex === type.length - 2) {
 			try {
-				return this.arrayOf(this.fromString(arrayMatch[1]));
+				return this.arrayOf(this.fromString(type.substr(0, arrayMarkIndex)));
 			} catch (e) {
 				throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation', { error: e });
 			}
