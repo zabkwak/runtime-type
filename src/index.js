@@ -34,10 +34,14 @@ export default {
 
 	isValidType: (type) => type instanceof Type,
 	fromString(type) {
-		if (!this._cacheDisabled && this._typeCache[type]) {
+		if (this._typeCache[type]) {
 			return this._typeCache[type];
 		}
-		return this._fromString(type);
+		const t = this._fromString(type);
+		if (!this._cacheDisabled) {
+			this._typeCache[type] = t;
+		}
+		return t;
 	},
 	disableCache() {
 		this._cacheDisabled = true;
