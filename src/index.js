@@ -34,6 +34,17 @@ export default {
 
 	isValidType: (type) => type instanceof Type,
 	fromString(type) {
+		if (!this._cacheDisabled && this._typeCache[type]) {
+			return this._typeCache[type];
+		}
+		return this._fromString(type);
+	},
+	disableCache() {
+		this._cacheDisabled = true;
+	},
+	Type,
+	Model,
+	_fromString(type) {
 		if (['integer', 'float', 'string', 'date', 'boolean', 'object', 'any'].includes(type)) {
 			return this[type];
 		}
@@ -90,8 +101,8 @@ export default {
 		// TODO instanceOf?
 		throw new Error(`Cannot convert '${type}' to Type.`, 'unsupported_operation');
 	},
-	Type,
-	Model,
+	_typeCache: {},
+	_cacheDisabled: false,
 };
 
 export {
